@@ -7,9 +7,9 @@
 ## INSTALLATION
 
 Chaque joueur reçoit des cartes face "date cachée"
-2-3 joueurs: 6 cartes
-4-5 joueurs: 5 cartes
-6-8 joueurs: 4 cartes
+* 2-3 joueurs: 6 cartes
+* 4-5 joueurs: 5 cartes
+* 6-8 joueurs: 4 cartes
 
 Une carte face "date visible" est placée au centre de la table. 
 
