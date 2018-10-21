@@ -8,12 +8,13 @@
     <ul class="navbar-nav mr-auto">
 
       {{% if auth.check %}}
+
         <li class="nav-item">
           <a class="nav-link" href="#">{{ auth.user.name }} </a>
         </li>
 
         <li class="nav-item">
-          <a class="nav-link" href="#">Sign out </a>
+          <a class="nav-link" href="{{ path_for('auth.signout') }}">Sign out </a>
         </li>
 
       {{% else %}}

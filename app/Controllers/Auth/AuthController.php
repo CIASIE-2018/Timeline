@@ -8,6 +8,14 @@ use Respect\Validation\Validator as v;
 
 class AuthController extends Controller {
 
+	public function getSignOut()
+	{
+		//Déconnexion
+		$this->auth->logout();
+		//redirect
+		return $response->withRedirect($this->router->pathFor('home'));
+	}
+
 	public function getSignIn($request, $response)
 	{
 		return $this->view->render($response, 'auth/signin.twig');
@@ -51,11 +59,15 @@ class AuthController extends Controller {
 			return $response->withRedirect($this->router->pathFor('auth.signup'));
 		}
 
+
 		$user = User::create([
 			'email' => $request->getParam('email'),
 			'name' => $request->getParam('name'),
 			'password' => password_hash($request->getParam('password'), PASSWORD_DEFAULT),
 		]);
+
+		//authentification auto
+		$this->auth->attempt($user->email, $request->getParam('password'));
 
 		return $response->withRedirect($this->router->pathFor('home'));
 	}
