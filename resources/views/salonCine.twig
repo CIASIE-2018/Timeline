@@ -1,0 +1,23 @@
+{% extends 'templates/app.twig' %}
+
+{% block content %}
+<h1> Cinéma </h1>
+<form action="/roomCreate">
+<a href="/creationSalonCinema"><input type="submit" action="/roomCreate" value="Créer un salon"></a>
+</form>
+
+
+<?php
+
+$tab = "<div><table><tr><td>Salons disponibles</td></tr>";
+$bdd = mysqli_connect('localhost', 'login', 'mdp', 'nom');
+$stmt = mysqli_prepare($bdd, 'SELECT * FROM Salon');
+mysqli_stmt_execute($stmt);
+mysqli_bind_result($stmt, $donnees[idSalon], $donnees[libSalon], $donnees[creator], $donnees[theme]);
+while(mysqli_stmt_fetch($stmt){
+    $tab .= "<tr><td>".$donnees[libSalon]."</td><td><a href=''><input type='submit' value='Rejoindre'></a></td></tr>";
+}
+$tab .= "</table></div>";
+?>
+
+{% endblock%}

@@ -33,6 +33,18 @@ $container['HomeController'] = function ($container) {
 	return new \App\Controllers\HomeController($container);
 };
 
+$container['ThemeController'] = function ($container) {
+	return new \App\Controllers\ThemeController($container);
+};
+
+$container['RoomController'] = function($container) {
+	return new  \App\Controllers\RoomController($container);
+};
+
+
+$container['roomCreate'] = function($container) {
+	return new  \App\Controllers\roomCreate($container);
+};
 
 
 require '../app/routes.php';
