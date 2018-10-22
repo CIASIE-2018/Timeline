@@ -14,8 +14,8 @@ $bdd = mysqli_connect('localhost', 'login', 'mdp', 'nom');
 $stmt = mysqli_prepare($bdd, 'SELECT * FROM Salon');
 mysqli_stmt_execute($stmt);
 mysqli_bind_result($stmt, $donnees[idSalon], $donnees[libSalon], $donnees[creator], $donnees[theme]);
-while(mysqli_stmt_fetch($stmt){
-    $tab .= "<tr><td>".$donnees[libSalon]."</td><td><a href=''><input type='submit' value='Rejoindre'></a></td></tr>";
+while(mysqli_stmt_fetch($stmt)){
+    $tab.="<tr><td>".$donnes[libSalon]."</td><td><a href=''><input type='submit' value='Rejoindre'></a></td></tr>";
 }
 $tab .= "</table></div>";
 ?>
