@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : db
--- Généré le :  lun. 22 oct. 2018 à 13:29
+-- Généré le :  lun. 22 oct. 2018 à 14:27
 -- Version du serveur :  10.3.10-MariaDB-1:10.3.10+maria~bionic
 -- Version de PHP :  7.2.8
 
@@ -92,6 +92,21 @@ INSERT INTO `carte` (`id`, `theme_id`, `date`, `event`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `game`
+--
+
+CREATE TABLE `game` (
+  `id` int(11) NOT NULL,
+  `isFinished` tinyint(1) NOT NULL,
+  `players` text NOT NULL,
+  `paquet` text NOT NULL,
+  `theme` int(11) NOT NULL,
+  `ligne` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `theme`
 --
 
@@ -121,6 +136,13 @@ ALTER TABLE `carte`
   ADD KEY `foreign_key_theme` (`theme_id`);
 
 --
+-- Index pour la table `game`
+--
+ALTER TABLE `game`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `theme` (`theme`);
+
+--
 -- Index pour la table `theme`
 --
 ALTER TABLE `theme`
@@ -137,6 +159,12 @@ ALTER TABLE `carte`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 
 --
+-- AUTO_INCREMENT pour la table `game`
+--
+ALTER TABLE `game`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT pour la table `theme`
 --
 ALTER TABLE `theme`
@@ -151,6 +179,12 @@ ALTER TABLE `theme`
 --
 ALTER TABLE `carte`
   ADD CONSTRAINT `foreign_key_theme` FOREIGN KEY (`theme_id`) REFERENCES `theme` (`id`);
+
+--
+-- Contraintes pour la table `game`
+--
+ALTER TABLE `game`
+  ADD CONSTRAINT `game_ibfk_1` FOREIGN KEY (`theme`) REFERENCES `theme` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
