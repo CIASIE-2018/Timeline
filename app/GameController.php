@@ -35,4 +35,12 @@ class GameController extends Controller {
         $this->addToLine($this->deck[count($this->deck)]);
         $this->isFinished = false;
     }
+
+    public function drawCard($player){
+        $player->addToHand($this->deck[count($this->deck)]);
+    }
+
+    
+
+
 }

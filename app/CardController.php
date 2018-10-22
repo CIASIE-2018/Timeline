@@ -11,6 +11,7 @@ Class CardController extends Controller{
     private $event;
     private $theme;
     private $img;
+    private $revealed = false;
 
     public function CardController($id, $date, $event, $theme, $img){
         $this->idCard = $id;
@@ -18,6 +19,10 @@ Class CardController extends Controller{
         $this->event = $event;
         $this->theme = $theme;
         $this->img = $img;
+    }
+
+    public function revealedCard(){
+        $this->revealed = true;
     }
 
     public function getDate(){

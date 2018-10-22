@@ -14,6 +14,7 @@ class PlayerController extends Controller {
     private $nbGames;
     private $score;
     private $hand = null;
+    private $handIsEmpty;
 
     public function PlayerController($id, $log, $mdp, $wins, $loss, $games, $score){
         $this->idPlayer = $id;
@@ -23,6 +24,47 @@ class PlayerController extends Controller {
         $this->nbLoss = $loss;
         $this->nbGames = $games;
         $this->score = $score;
+        $this->handIsEmpty = true;
+    }
+
+
+    public function ajoutercartedanslatimeline($carte, $index) {
+
+        if(array_key_exists($index-1, $timeline))
+        {
+            $dateSup = $timeline[$index-1] <= $timeline[$index];
+        }
+    
+        if(array_key_exists($index+1, $timeline))
+        {
+            $positionOK = $dateSup && ($timeline[$index+1] >= $timeline[$index]);
+        }
+    
+        if($positionOK)
+        {
+            $timeline[$index] = $carte;
+            removeFromHand($carte);
+        } else {
+            removeFromHand($carte);
+            drawCard();
+        }
+
+    }
+
+    public function removeFromHand($card){
+        for($i = 0; $i < count($this->hand); $i++){
+            if($this->hand[i].getEvent() == $card.getEvent()){
+                unset($this->hand[i]);
+            }
+        }
+    }
+
+    public function isHandEmpty(){
+        return count($this->hand) == 0;
+    }
+
+    public function setHandEmpty(){
+        $this->handIsEmpty = !$this->handIsEmpty;
     }
 
     public function getLogin(){
