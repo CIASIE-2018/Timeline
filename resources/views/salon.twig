@@ -1,0 +1,10 @@
+{% extends 'templates/app.twig' %}
+
+$id=$_GET['idTheme'];
+
+{% block content %}
+<a href="?idTheme=$id"><input type="submit" value="Créer un salon"></a>
+<a href="?idTheme=$id"><input type="submit" value="Rejoindre un salon"></a>
+
+
+{% endblock%}
