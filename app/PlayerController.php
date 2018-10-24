@@ -15,7 +15,8 @@ class PlayerController extends Controller {
     private $score;
     private $hand = null;
     private $handIsEmpty;
-    private $turn = 0;
+    private $order = 0;
+	private $turn = false;
 
     public function PlayerController($id, $log, $mdp, $wins, $loss, $games, $score){
         $this->idPlayer = $id;
@@ -89,20 +90,28 @@ class PlayerController extends Controller {
         $this->nbGames++;
     }
 
-    public function setTurn($turn){
-	$this->turn = $turn;
+    public function setOrder($order){
+		$this->order = $order;
     }
 
-    public function getTurn(){
-	return $this->turn;
+    public function getOrder(){
+		return $this->order;
     }
 
-    public function isPlayersTurn(){
-	//retourne si le joueur est actif pendant ce tour (boolean)
-    }
+	public function getTurn(){
+		return $this->turn;
+	}
+
+	public function setTurn($turn){
+		$this->turn = $turn;
+	}
 
     public function selectCardFromHand(){
 	//selectionne une carte de la main (retourne la carte choisie)
     }
+
+	public function selectIndex(){
+		//selectionne un index auquel positionner sa carte
+	}
 
 }

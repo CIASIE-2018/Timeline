@@ -23,6 +23,7 @@ Class CardController extends Controller{
 
     public function revealedCard(){
         $this->revealed = true;
+	//afficher la date sur la carte
     }
 
     public function getDate(){
