@@ -12,23 +12,36 @@ class PlayerController extends Controller {
     private $nbWins;
     private $nbLoss;
     private $nbGames;
-    private $score;
+    private $score = 0;
     private $hand = null;
-    private $handIsEmpty;
+    private $handIsEmpty = false;
     private $order = 0;
 	private $turn = false;
 
-    public function PlayerController($id, $log, $mdp, $wins, $loss, $games, $score){
+    public function PlayerController($id, $log, $mdp, $wins, $loss, $games){
+		$bdd = mysqli_connect('localhost', 'login', 'password', 'name');
+		$query = mysqli_prepare($bdd, 'SELECT * FROM Joueur WHERE login = ? AND password = ?');
+		msqli_stmt_bind_param($query, "ss", $login, $mdp);
+		mysqli_stmt_execute($query);
+		mysqli_bind_result($query, $data[idJoueur], $data[login], $data[password], $data[nbWins], $data[nbLoss], $data[nbGames], $data[score]);
+		while(mysqli_stmt_fetch($query){
+			$this->idPlayer = $data[idJoueur];
+        	$this->login = $data[login];
+        	$this->password = $data[password];
+        	$this->nbWins = $data[nbWins];
+        	$this->nbLoss = $data[nbLoss];
+        	$this->nbGames = $data[nbGames];
+			$this->score = $data[score];
+		}
+		mysqli_close($bdd);
+/*
         $this->idPlayer = $id;
         $this->login = $log;
         $this->password = $mdp;
         $this->nbWins = $wins;
         $this->nbLoss = $loss;
-        $this->nbGames = $games;
-        $this->score = $score;
-        $this->handIsEmpty = true;
+        $this->nbGames = $games; */
     }
-
 
     public function removeFromHand($card){
         for($i = 0; $i < count($this->hand); $i++){

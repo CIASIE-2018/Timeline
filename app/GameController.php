@@ -37,6 +37,7 @@ class GameController extends Controller {
         }
         array_push($this->timeline, $this->deck[count($this->deck)-1]);
         $this->isFinished = false;
+		mysqli_close($bdd);
     }
 
     public function drawCard($player){
@@ -44,7 +45,7 @@ class GameController extends Controller {
     }
 
     public function getTimeline(){
-	return $this->$timeline();
+		return $this->$timeline();
     }    
 
     public function playCard($player, $card, $index){
@@ -106,6 +107,7 @@ class GameController extends Controller {
 	public function playGame(){
 		while($this->isFinished != true){
 			for($i = 0; $i < count($this->players); $i++){
+				$this->turn++;
 				$card = $this->players[$i]->selectCardFromHand();
 				$index = $this->players[$i]->selectIndex();
 				$this->playCard($this->players[$i], $card, $index);
