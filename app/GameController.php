@@ -51,25 +51,37 @@ class GameController extends Controller {
 	    	if($index <= 0){
 				if(($this->timeline[0]->getDate()) <= $card->getDate()){
 					array_splice($this->timeline, 0, 0, $card);
+					if($player->isHandEmpty()){
+						$this->isFinished = True;
+						return $player->getLogin()." a gagné !";
+					}
 				}
 				else{
-					$player->addToHand($this->deck[count($this->deck)]);
+					$this->drawCard($player);
 				}
 	    	}
 	   		else if($index >= $this->timeline[count($this->timeline)]){
 				if(($this->timeline[count($this->deck)-1]) <= $card->getDate()){
 					array_push($this->timeline, $card);
+					if($player->isHandEmpty()){
+						$this->isFinished = True;
+						return $player->getLogin()." a gagné !";
+					}
 				}
 				else{
-					$player->addToHand($this->deck[count($this->deck)-1]);
+					$this->drawCard($player);
 				}
 	    	}
 	    	else{
 				if(($this->timeline[$index-1]->getDate()) <= $card->getDate() && ($this->timeline[$index+1]->getDate()) >= $card->getDate()){
 					array_splice($this->timeline, $index, 0, $card);
+					if($player->isHandEmpty()){
+						$this->isFinished = True;
+						return $player->getLogin()." a gagné !";
+					}
 				}
 				else{
-					$player->addToHand($this->deck[count($this->deck)-1]);
+					$this->drawCard($player);
 				}
 			}
 		}
