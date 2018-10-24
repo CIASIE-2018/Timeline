@@ -15,6 +15,7 @@ class PlayerController extends Controller {
     private $score;
     private $hand = null;
     private $handIsEmpty;
+    private $turn = 0;
 
     public function PlayerController($id, $log, $mdp, $wins, $loss, $games, $score){
         $this->idPlayer = $id;
@@ -27,29 +28,6 @@ class PlayerController extends Controller {
         $this->handIsEmpty = true;
     }
 
-
-    public function ajoutercartedanslatimeline($carte, $index) {
-
-        if(array_key_exists($index-1, $timeline))
-        {
-            $dateSup = $timeline[$index-1] <= $timeline[$index];
-        }
-    
-        if(array_key_exists($index+1, $timeline))
-        {
-            $positionOK = $dateSup && ($timeline[$index+1] >= $timeline[$index]);
-        }
-    
-        if($positionOK)
-        {
-            $timeline[$index] = $carte;
-            removeFromHand($carte);
-        } else {
-            removeFromHand($carte);
-            drawCard();
-        }
-
-    }
 
     public function removeFromHand($card){
         for($i = 0; $i < count($this->hand); $i++){
@@ -111,8 +89,20 @@ class PlayerController extends Controller {
         $this->nbGames++;
     }
 
-    public function playCard($card, $index){
-        //placer $card dans la timeline à l'index $index
-        //retirer $card de $this->hand
+    public function setTurn($turn){
+	$this->turn = $turn;
     }
+
+    public function getTurn(){
+	return $this->turn;
+    }
+
+    public function isPlayersTurn(){
+	//retourne si le joueur est actif pendant ce tour (boolean)
+    }
+
+    public function selectCardFromHand(){
+	//selectionne une carte de la main (retourne la carte choisie)
+    }
+
 }
