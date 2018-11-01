@@ -16,7 +16,7 @@ class PlayerController extends Controller {
     private $hand = null;
     private $handIsEmpty = false;
     private $order = 0;
-	private $turn = false;
+	  private $turn = false;
 
     public function PlayerController($id, $log, $mdp, $wins, $loss, $games){
 		$bdd = mysqli_connect('localhost', 'login', 'password', 'name');
@@ -25,13 +25,13 @@ class PlayerController extends Controller {
 		mysqli_stmt_execute($query);
 		mysqli_bind_result($query, $data[idJoueur], $data[login], $data[password], $data[nbWins], $data[nbLoss], $data[nbGames], $data[score]);
 		while(mysqli_stmt_fetch($query){
-			$this->idPlayer = $data[idJoueur];
-        	$this->login = $data[login];
-        	$this->password = $data[password];
-        	$this->nbWins = $data[nbWins];
-        	$this->nbLoss = $data[nbLoss];
-        	$this->nbGames = $data[nbGames];
-			$this->score = $data[score];
+		    $this->idPlayer = $data[idJoueur];
+        $this->login = $data[login];
+        $this->password = $data[password];
+        $this->nbWins = $data[nbWins];
+        $this->nbLoss = $data[nbLoss];
+        $this->nbGames = $data[nbGames];
+			  $this->score = $data[score];
 		}
 		mysqli_close($bdd);
 /*
