@@ -18,10 +18,10 @@ class PlayerController extends Controller {
     private $order = 0;
 	  private $turn = false;
 
-    public function PlayerController($id, $log, $mdp, $wins, $loss, $games){
+    public function PlayerController($log, $mdp){
 		$bdd = mysqli_connect('localhost', 'login', 'password', 'name');
 		$query = mysqli_prepare($bdd, 'SELECT * FROM Joueur WHERE login = ? AND password = ?');
-		msqli_stmt_bind_param($query, "ss", $login, $mdp);
+		msqli_stmt_bind_param($query, "ss", $log, $mdp);
 		mysqli_stmt_execute($query);
 		mysqli_bind_result($query, $data[idJoueur], $data[login], $data[password], $data[nbWins], $data[nbLoss], $data[nbGames], $data[score]);
 		while(mysqli_stmt_fetch($query){

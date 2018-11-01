@@ -11,7 +11,7 @@ class ThemeController extends Controller {
 
     public function index ($request, $response)
     {
-	return $this->view->render($response, 'theme1.twig');
+	     return $this->view->render($response, 'theme1.twig');
     }
 
     public function ThemeController($id, $name){

@@ -13,7 +13,7 @@ Class CardController extends Controller{
     private $img;
     private $revealed = false;
 
-    public function CardController($id, $date, $event, $theme, $img){
+    public function CardController($id){
       $bdd = mysqli_connect('localhost', 'login', 'password', 'name');
       $query = mysqli_prepare($bdd, 'SELECT * FROM Carte WHERE id = ?');
       msqli_stmt_bind_param($query, "i", $id);
@@ -23,7 +23,7 @@ Class CardController extends Controller{
           $this->idCard = $data[id];
           $this->date = $data[date];
           $this->event = $data[event];
-          
+
           $stmt = mysqli_prepare($bdd, 'SELECT nom FROM Theme WHERE id = ?');
           msqli_stmt_bind_param($tstmt, "i", $data[idTheme]);
           mysqli_stmt_execute($stmt);
