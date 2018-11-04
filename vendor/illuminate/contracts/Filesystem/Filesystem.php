@@ -37,6 +37,19 @@ interface Filesystem
     public function get($path);
 
     /**
+<<<<<<< HEAD
+=======
+     * Get a resource to read the file.
+     *
+     * @param  string  $path
+     * @return resource|null The path resource or null on failure.
+     *
+     * @throws FileNotFoundException
+     */
+    public function readStream($path);
+
+    /**
+>>>>>>> master
      * Write the contents of a file.
      *
      * @param  string  $path
@@ -47,6 +60,22 @@ interface Filesystem
     public function put($path, $contents, $options = []);
 
     /**
+<<<<<<< HEAD
+=======
+     * Write a new file using a stream.
+     *
+     * @param  string  $path
+     * @param  resource $resource
+     * @param  mixed  $options
+     * @return bool
+     *
+     * @throws \InvalidArgumentException If $resource is not a file handle.
+     * @throws FileExistsException
+     */
+    public function writeStream($path, $resource, array $options = []);
+
+    /**
+>>>>>>> master
      * Get the visibility for the given path.
      *
      * @param  string  $path
@@ -59,7 +88,11 @@ interface Filesystem
      *
      * @param  string  $path
      * @param  string  $visibility
+<<<<<<< HEAD
      * @return void
+=======
+     * @return bool
+>>>>>>> master
      */
     public function setVisibility($path, $visibility);
 

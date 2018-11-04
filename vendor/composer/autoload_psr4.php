@@ -14,7 +14,10 @@ return array(
     'Slim\\Middleware\\' => array($vendorDir . '/tuupola/slim-basic-auth/src'),
     'Slim\\Csrf\\' => array($vendorDir . '/slim/csrf/src'),
     'Slim\\' => array($vendorDir . '/slim/slim/Slim'),
+<<<<<<< HEAD
     'Respect\\Validation\\' => array($vendorDir . '/respect/validation/library'),
+=======
+>>>>>>> master
     'Psr\\SimpleCache\\' => array($vendorDir . '/psr/simple-cache/src'),
     'Psr\\Http\\Message\\' => array($vendorDir . '/psr/http-message/src'),
     'Psr\\Container\\' => array($vendorDir . '/psr/container/src'),

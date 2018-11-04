@@ -8,6 +8,10 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Contracts\Support\Arrayable;
+<<<<<<< HEAD
+=======
+use Illuminate\Support\Traits\ForwardsCalls;
+>>>>>>> master
 use Illuminate\Database\Concerns\BuildsQueries;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Database\Query\Builder as QueryBuilder;
@@ -17,7 +21,11 @@ use Illuminate\Database\Query\Builder as QueryBuilder;
  */
 class Builder
 {
+<<<<<<< HEAD
     use BuildsQueries, Concerns\QueriesRelationships;
+=======
+    use BuildsQueries, Concerns\QueriesRelationships, ForwardsCalls;
+>>>>>>> master
 
     /**
      * The base query builder instance.
@@ -68,7 +76,11 @@ class Builder
      */
     protected $passthru = [
         'insert', 'insertGetId', 'getBindings', 'toSql',
+<<<<<<< HEAD
         'exists', 'doesntExist', 'count', 'min', 'max', 'avg', 'sum', 'getConnection',
+=======
+        'exists', 'doesntExist', 'count', 'min', 'max', 'avg', 'average', 'sum', 'getConnection',
+>>>>>>> master
     ];
 
     /**
@@ -152,12 +164,21 @@ class Builder
      */
     public function withoutGlobalScopes(array $scopes = null)
     {
+<<<<<<< HEAD
         if (is_array($scopes)) {
             foreach ($scopes as $scope) {
                 $this->withoutGlobalScope($scope);
             }
         } else {
             $this->scopes = [];
+=======
+        if (! is_array($scopes)) {
+            $scopes = array_keys($this->scopes);
+        }
+
+        foreach ($scopes as $scope) {
+            $this->withoutGlobalScope($scope);
+>>>>>>> master
         }
 
         return $this;
@@ -211,8 +232,13 @@ class Builder
      * Add a basic where clause to the query.
      *
      * @param  string|array|\Closure  $column
+<<<<<<< HEAD
      * @param  string  $operator
      * @param  mixed  $value
+=======
+     * @param  mixed   $operator
+     * @param  mixed   $value
+>>>>>>> master
      * @param  string  $boolean
      * @return $this
      */
@@ -233,20 +259,66 @@ class Builder
      * Add an "or where" clause to the query.
      *
      * @param  \Closure|array|string  $column
+<<<<<<< HEAD
      * @param  string  $operator
+=======
+     * @param  mixed  $operator
+>>>>>>> master
      * @param  mixed  $value
      * @return \Illuminate\Database\Eloquent\Builder|static
      */
     public function orWhere($column, $operator = null, $value = null)
     {
+<<<<<<< HEAD
         list($value, $operator) = $this->query->prepareValueAndOperator(
             $value, $operator, func_num_args() == 2
+=======
+        [$value, $operator] = $this->query->prepareValueAndOperator(
+            $value, $operator, func_num_args() === 2
+>>>>>>> master
         );
 
         return $this->where($column, $operator, $value, 'or');
     }
 
     /**
+<<<<<<< HEAD
+=======
+     * Add an "order by" clause for a timestamp to the query.
+     *
+     * @param  string  $column
+     * @return $this
+     */
+    public function latest($column = null)
+    {
+        if (is_null($column)) {
+            $column = $this->model->getCreatedAtColumn() ?? 'created_at';
+        }
+
+        $this->query->latest($column);
+
+        return $this;
+    }
+
+    /**
+     * Add an "order by" clause for a timestamp to the query.
+     *
+     * @param  string  $column
+     * @return $this
+     */
+    public function oldest($column = null)
+    {
+        if (is_null($column)) {
+            $column = $this->model->getCreatedAtColumn() ?? 'created_at';
+        }
+
+        $this->query->oldest($column);
+
+        return $this;
+    }
+
+    /**
+>>>>>>> master
      * Create a collection of models from plain arrays.
      *
      * @param  array  $items
@@ -312,7 +384,11 @@ class Builder
      *
      * @param  mixed  $id
      * @param  array  $columns
+<<<<<<< HEAD
      * @return \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection
+=======
+     * @return \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|static|static[]
+>>>>>>> master
      *
      * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
      */
@@ -321,7 +397,11 @@ class Builder
         $result = $this->find($id, $columns);
 
         if (is_array($id)) {
+<<<<<<< HEAD
             if (count($result) == count(array_unique($id))) {
+=======
+            if (count($result) === count(array_unique($id))) {
+>>>>>>> master
                 return $result;
             }
         } elseif (! is_null($result)) {
@@ -338,7 +418,11 @@ class Builder
      *
      * @param  mixed  $id
      * @param  array  $columns
+<<<<<<< HEAD
      * @return \Illuminate\Database\Eloquent\Model
+=======
+     * @return \Illuminate\Database\Eloquent\Model|static
+>>>>>>> master
      */
     public function findOrNew($id, $columns = ['*'])
     {
@@ -354,7 +438,11 @@ class Builder
      *
      * @param  array  $attributes
      * @param  array  $values
+<<<<<<< HEAD
      * @return \Illuminate\Database\Eloquent\Model
+=======
+     * @return \Illuminate\Database\Eloquent\Model|static
+>>>>>>> master
      */
     public function firstOrNew(array $attributes, array $values = [])
     {
@@ -370,7 +458,11 @@ class Builder
      *
      * @param  array  $attributes
      * @param  array  $values
+<<<<<<< HEAD
      * @return \Illuminate\Database\Eloquent\Model
+=======
+     * @return \Illuminate\Database\Eloquent\Model|static
+>>>>>>> master
      */
     public function firstOrCreate(array $attributes, array $values = [])
     {
@@ -388,7 +480,11 @@ class Builder
      *
      * @param  array  $attributes
      * @param  array  $values
+<<<<<<< HEAD
      * @return \Illuminate\Database\Eloquent\Model
+=======
+     * @return \Illuminate\Database\Eloquent\Model|static
+>>>>>>> master
      */
     public function updateOrCreate(array $attributes, array $values = [])
     {
@@ -473,7 +569,11 @@ class Builder
      * Get the hydrated models without eager loading.
      *
      * @param  array  $columns
+<<<<<<< HEAD
      * @return \Illuminate\Database\Eloquent\Model[]
+=======
+     * @return \Illuminate\Database\Eloquent\Model[]|static[]
+>>>>>>> master
      */
     public function getModels($columns = ['*'])
     {
@@ -612,7 +712,11 @@ class Builder
      *
      * @param  int  $count
      * @param  callable  $callback
+<<<<<<< HEAD
      * @param  string  $column
+=======
+     * @param  string|null  $column
+>>>>>>> master
      * @param  string|null  $alias
      * @return bool
      */
@@ -622,7 +726,11 @@ class Builder
 
         $alias = is_null($alias) ? $column : $alias;
 
+<<<<<<< HEAD
         $lastId = 0;
+=======
+        $lastId = null;
+>>>>>>> master
 
         do {
             $clone = clone $this;
@@ -784,7 +892,11 @@ class Builder
      * Increment a column's value by a given amount.
      *
      * @param  string  $column
+<<<<<<< HEAD
      * @param  int  $amount
+=======
+     * @param  float|int  $amount
+>>>>>>> master
      * @param  array  $extra
      * @return int
      */
@@ -799,7 +911,11 @@ class Builder
      * Decrement a column's value by a given amount.
      *
      * @param  string  $column
+<<<<<<< HEAD
      * @param  int  $amount
+=======
+     * @param  float|int  $amount
+>>>>>>> master
      * @param  array  $extra
      * @return int
      */
@@ -880,7 +996,11 @@ class Builder
             // the parameter list is empty, so we will format the scope name and these
             // parameters here. Then, we'll be ready to call the scope on the model.
             if (is_int($scope)) {
+<<<<<<< HEAD
                 list($scope, $parameters) = [$parameters, []];
+=======
+                [$scope, $parameters] = [$parameters, []];
+>>>>>>> master
             }
 
             // Next we'll pass the scope callback to the callScope method which will take
@@ -1059,7 +1179,11 @@ class Builder
      * Create a new instance of the model being queried.
      *
      * @param  array  $attributes
+<<<<<<< HEAD
      * @return \Illuminate\Database\Eloquent\Model
+=======
+     * @return \Illuminate\Database\Eloquent\Model|static
+>>>>>>> master
      */
     public function newModelInstance($attributes = [])
     {
@@ -1085,7 +1209,11 @@ class Builder
             if (is_numeric($name)) {
                 $name = $constraints;
 
+<<<<<<< HEAD
                 list($name, $constraints) = Str::contains($name, ':')
+=======
+                [$name, $constraints] = Str::contains($name, ':')
+>>>>>>> master
                             ? $this->createSelectWithConstraint($name)
                             : [$name, function () {
                                 //
@@ -1202,7 +1330,11 @@ class Builder
     /**
      * Get the model instance being queried.
      *
+<<<<<<< HEAD
      * @return \Illuminate\Database\Eloquent\Model
+=======
+     * @return \Illuminate\Database\Eloquent\Model|static
+>>>>>>> master
      */
     public function getModel()
     {
@@ -1283,7 +1415,11 @@ class Builder
             return $this->toBase()->{$method}(...$parameters);
         }
 
+<<<<<<< HEAD
         $this->query->{$method}(...$parameters);
+=======
+        $this->forwardCallTo($this->query, $method, $parameters);
+>>>>>>> master
 
         return $this;
     }
@@ -1306,7 +1442,11 @@ class Builder
         }
 
         if (! isset(static::$macros[$method])) {
+<<<<<<< HEAD
             throw new BadMethodCallException("Method {$method} does not exist.");
+=======
+            static::throwBadMethodCallException($method);
+>>>>>>> master
         }
 
         if (static::$macros[$method] instanceof Closure) {

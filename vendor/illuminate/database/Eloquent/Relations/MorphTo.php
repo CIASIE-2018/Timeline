@@ -91,7 +91,11 @@ class MorphTo extends BelongsTo
      */
     public function getResults()
     {
+<<<<<<< HEAD
         return $this->ownerKey ? $this->query->first() : null;
+=======
+        return $this->ownerKey ? parent::getResults() : null;
+>>>>>>> master
     }
 
     /**
@@ -120,12 +124,21 @@ class MorphTo extends BelongsTo
     {
         $instance = $this->createModelByType($type);
 
+<<<<<<< HEAD
+=======
+        $ownerKey = $this->ownerKey ?? $instance->getKeyName();
+
+>>>>>>> master
         $query = $this->replayMacros($instance->newQuery())
                             ->mergeConstraintsFrom($this->getQuery())
                             ->with($this->getQuery()->getEagerLoads());
 
         return $query->whereIn(
+<<<<<<< HEAD
             $instance->getTable().'.'.$instance->getKeyName(), $this->gatherKeysByType($type)
+=======
+            $instance->getTable().'.'.$ownerKey, $this->gatherKeysByType($type)
+>>>>>>> master
         )->get();
     }
 
@@ -178,8 +191,15 @@ class MorphTo extends BelongsTo
     protected function matchToMorphParents($type, Collection $results)
     {
         foreach ($results as $result) {
+<<<<<<< HEAD
             if (isset($this->dictionary[$type][$result->getKey()])) {
                 foreach ($this->dictionary[$type][$result->getKey()] as $model) {
+=======
+            $ownerKey = ! is_null($this->ownerKey) ? $result->{$this->ownerKey} : $result->getKey();
+
+            if (isset($this->dictionary[$type][$ownerKey])) {
+                foreach ($this->dictionary[$type][$ownerKey] as $model) {
+>>>>>>> master
                     $model->setRelation($this->relation, $result);
                 }
             }
@@ -220,6 +240,21 @@ class MorphTo extends BelongsTo
     }
 
     /**
+<<<<<<< HEAD
+=======
+     * Touch all of the related models for the relationship.
+     *
+     * @return void
+     */
+    public function touch()
+    {
+        if (! is_null($this->ownerKey)) {
+            parent::touch();
+        }
+    }
+
+    /**
+>>>>>>> master
      * Get the foreign key "type" name.
      *
      * @return string
@@ -264,7 +299,17 @@ class MorphTo extends BelongsTo
     public function __call($method, $parameters)
     {
         try {
+<<<<<<< HEAD
             return parent::__call($method, $parameters);
+=======
+            $result = parent::__call($method, $parameters);
+
+            if (in_array($method, ['select', 'selectRaw', 'selectSub', 'addSelect', 'withoutGlobalScopes'])) {
+                $this->macroBuffer[] = compact('method', 'parameters');
+            }
+
+            return $result;
+>>>>>>> master
         }
 
         // If we tried to call a method that does not exist on the parent Builder instance,

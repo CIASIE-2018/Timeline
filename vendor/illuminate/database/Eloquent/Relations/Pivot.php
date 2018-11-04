@@ -2,6 +2,7 @@
 
 namespace Illuminate\Database\Eloquent\Relations;
 
+<<<<<<< HEAD
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
@@ -28,6 +29,14 @@ class Pivot extends Model
      * @var string
      */
     protected $relatedKey;
+=======
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Concerns\AsPivot;
+
+class Pivot extends Model
+{
+    use AsPivot;
+>>>>>>> master
 
     /**
      * The attributes that aren't mass assignable.
@@ -35,6 +44,7 @@ class Pivot extends Model
      * @var array
      */
     protected $guarded = [];
+<<<<<<< HEAD
 
     /**
      * Create a new pivot model instance.
@@ -232,4 +242,6 @@ class Pivot extends Model
                         ? $this->pivotParent->getUpdatedAtColumn()
                         : parent::getUpdatedAtColumn();
     }
+=======
+>>>>>>> master
 }

@@ -30,11 +30,21 @@ trait SoftDeletes
     {
         $this->forceDeleting = true;
 
+<<<<<<< HEAD
         $deleted = $this->delete();
 
         $this->forceDeleting = false;
 
         return $deleted;
+=======
+        return tap($this->delete(), function ($deleted) {
+            $this->forceDeleting = false;
+
+            if ($deleted) {
+                $this->fireModelEvent('forceDeleted', false);
+            }
+        });
+>>>>>>> master
     }
 
     /**

@@ -172,7 +172,10 @@ class MySqlConnector extends Connector implements ConnectorInterface
      * Get the query to enable strict mode.
      *
      * @param  \PDO  $connection
+<<<<<<< HEAD
      *
+=======
+>>>>>>> master
      * @return string
      */
     protected function strictMode(PDO $connection)

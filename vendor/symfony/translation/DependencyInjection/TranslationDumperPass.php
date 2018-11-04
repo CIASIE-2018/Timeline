@@ -23,7 +23,11 @@ class TranslationDumperPass implements CompilerPassInterface
     private $writerServiceId;
     private $dumperTag;
 
+<<<<<<< HEAD
     public function __construct($writerServiceId = 'translation.writer', $dumperTag = 'translation.dumper')
+=======
+    public function __construct(string $writerServiceId = 'translation.writer', string $dumperTag = 'translation.dumper')
+>>>>>>> master
     {
         $this->writerServiceId = $writerServiceId;
         $this->dumperTag = $dumperTag;

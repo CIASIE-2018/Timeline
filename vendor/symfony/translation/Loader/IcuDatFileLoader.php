@@ -39,7 +39,10 @@ class IcuDatFileLoader extends IcuResFileLoader
         try {
             $rb = new \ResourceBundle($locale, $resource);
         } catch (\Exception $e) {
+<<<<<<< HEAD
             // HHVM compatibility: constructor throws on invalid resource
+=======
+>>>>>>> master
             $rb = null;
         }
 

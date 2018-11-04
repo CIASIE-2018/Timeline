@@ -62,7 +62,11 @@ class DatabaseManager implements ConnectionResolverInterface
      */
     public function connection($name = null)
     {
+<<<<<<< HEAD
         list($database, $type) = $this->parseConnectionName($name);
+=======
+        [$database, $type] = $this->parseConnectionName($name);
+>>>>>>> master
 
         $name = $name ?: $database;
 
@@ -137,7 +141,11 @@ class DatabaseManager implements ConnectionResolverInterface
         $connections = $this->app['config']['database.connections'];
 
         if (is_null($config = Arr::get($connections, $name))) {
+<<<<<<< HEAD
             throw new InvalidArgumentException("Database [$name] not configured.");
+=======
+            throw new InvalidArgumentException("Database [{$name}] not configured.");
+>>>>>>> master
         }
 
         return $config;

@@ -147,6 +147,25 @@ class MorphToMany extends BelongsToMany
     }
 
     /**
+<<<<<<< HEAD
+=======
+     * Get the pivot columns for the relation.
+     *
+     * "pivot_" is prefixed at each column for easy removal later.
+     *
+     * @return array
+     */
+    protected function aliasedPivotColumns()
+    {
+        $defaults = [$this->foreignPivotKey, $this->relatedPivotKey, $this->morphType];
+
+        return collect(array_merge($defaults, $this->pivotColumns))->map(function ($column) {
+            return $this->table.'.'.$column.' as pivot_'.$column;
+        })->unique()->all();
+    }
+
+    /**
+>>>>>>> master
      * Get the foreign key "type" name.
      *
      * @return string

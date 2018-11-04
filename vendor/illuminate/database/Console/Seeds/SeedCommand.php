@@ -62,6 +62,11 @@ class SeedCommand extends Command
         Model::unguarded(function () {
             $this->getSeeder()->__invoke();
         });
+<<<<<<< HEAD
+=======
+
+        $this->info('Database seeding completed successfully.');
+>>>>>>> master
     }
 
     /**
@@ -100,7 +105,11 @@ class SeedCommand extends Command
 
             ['database', null, InputOption::VALUE_OPTIONAL, 'The database connection to seed'],
 
+<<<<<<< HEAD
             ['force', null, InputOption::VALUE_NONE, 'Force the operation to run when in production.'],
+=======
+            ['force', null, InputOption::VALUE_NONE, 'Force the operation to run when in production'],
+>>>>>>> master
         ];
     }
 }

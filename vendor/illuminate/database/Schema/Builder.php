@@ -69,7 +69,11 @@ class Builder
     {
         $table = $this->connection->getTablePrefix().$table;
 
+<<<<<<< HEAD
         return count($this->connection->select(
+=======
+        return count($this->connection->selectFromWriteConnection(
+>>>>>>> master
             $this->grammar->compileTableExists(), [$table]
         )) > 0;
     }
@@ -130,7 +134,11 @@ class Builder
      */
     public function getColumnListing($table)
     {
+<<<<<<< HEAD
         $results = $this->connection->select($this->grammar->compileColumnListing(
+=======
+        $results = $this->connection->selectFromWriteConnection($this->grammar->compileColumnListing(
+>>>>>>> master
             $this->connection->getTablePrefix().$table
         ));
 
@@ -204,6 +212,21 @@ class Builder
     }
 
     /**
+<<<<<<< HEAD
+=======
+     * Drop all views from the database.
+     *
+     * @return void
+     *
+     * @throws \LogicException
+     */
+    public function dropAllViews()
+    {
+        throw new LogicException('This database driver does not support dropping all views.');
+    }
+
+    /**
+>>>>>>> master
      * Rename a table on the schema.
      *
      * @param  string  $from
@@ -261,11 +284,23 @@ class Builder
      */
     protected function createBlueprint($table, Closure $callback = null)
     {
+<<<<<<< HEAD
         if (isset($this->resolver)) {
             return call_user_func($this->resolver, $table, $callback);
         }
 
         return new Blueprint($table, $callback);
+=======
+        $prefix = $this->connection->getConfig('prefix_indexes')
+                    ? $this->connection->getConfig('prefix')
+                    : '';
+
+        if (isset($this->resolver)) {
+            return call_user_func($this->resolver, $table, $callback, $prefix);
+        }
+
+        return new Blueprint($table, $callback, $prefix);
+>>>>>>> master
     }
 
     /**

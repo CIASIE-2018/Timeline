@@ -278,6 +278,24 @@ class SqlServerGrammar extends Grammar
     }
 
     /**
+<<<<<<< HEAD
+=======
+     * Compile a rename index command.
+     *
+     * @param  \Illuminate\Database\Schema\Blueprint $blueprint
+     * @param  \Illuminate\Support\Fluent $command
+     * @return string
+     */
+    public function compileRenameIndex(Blueprint $blueprint, Fluent $command)
+    {
+        return sprintf("sp_rename N'%s', %s, N'INDEX'",
+            $this->wrap($blueprint->getTable().'.'.$command->from),
+            $this->wrap($command->to)
+        );
+    }
+
+    /**
+>>>>>>> master
      * Compile the command to enable foreign key constraints.
      *
      * @return string
@@ -452,14 +470,26 @@ class SqlServerGrammar extends Grammar
     }
 
     /**
+<<<<<<< HEAD
      * Create the column definition for an enum type.
+=======
+     * Create the column definition for an enumeration type.
+>>>>>>> master
      *
      * @param  \Illuminate\Support\Fluent  $column
      * @return string
      */
     protected function typeEnum(Fluent $column)
     {
+<<<<<<< HEAD
         return 'nvarchar(255)';
+=======
+        return sprintf(
+            'nvarchar(255) check ("%s" in (%s))',
+            $column->name,
+            $this->quoteString($column->allowed)
+        );
+>>>>>>> master
     }
 
     /**

@@ -10,6 +10,16 @@ use Illuminate\Database\Query\JsonExpression;
 class MySqlGrammar extends Grammar
 {
     /**
+<<<<<<< HEAD
+=======
+     * The grammar specific operators.
+     *
+     * @var array
+     */
+    protected $operators = ['sounds like'];
+
+    /**
+>>>>>>> master
      * The components that make up a select clause.
      *
      * @var array
@@ -46,6 +56,36 @@ class MySqlGrammar extends Grammar
     }
 
     /**
+<<<<<<< HEAD
+=======
+     * Compile a "JSON contains" statement into SQL.
+     *
+     * @param  string  $column
+     * @param  string  $value
+     * @return string
+     */
+    protected function compileJsonContains($column, $value)
+    {
+        return 'json_contains('.$this->wrap($column).', '.$value.')';
+    }
+
+    /**
+     * Compile a "JSON length" statement into SQL.
+     *
+     * @param  string  $column
+     * @param  string  $operator
+     * @param  string  $value
+     * @return string
+     */
+    protected function compileJsonLength($column, $operator, $value)
+    {
+        [$field, $path] = $this->wrapJsonFieldAndPath($column);
+
+        return 'json_length('.$field.$path.') '.$operator.' '.$value;
+    }
+
+    /**
+>>>>>>> master
      * Compile a single union statement.
      *
      * @param  array  $union
@@ -53,9 +93,15 @@ class MySqlGrammar extends Grammar
      */
     protected function compileUnion(array $union)
     {
+<<<<<<< HEAD
         $conjuction = $union['all'] ? ' union all ' : ' union ';
 
         return $conjuction.'('.$union['query']->toSql().')';
+=======
+        $conjunction = $union['all'] ? ' union all ' : ' union ';
+
+        return $conjunction.'('.$union['query']->toSql().')';
+>>>>>>> master
     }
 
     /**
@@ -160,6 +206,7 @@ class MySqlGrammar extends Grammar
      */
     protected function compileJsonUpdateColumn($key, JsonExpression $value)
     {
+<<<<<<< HEAD
         $path = explode('->', $key);
 
         $field = $this->wrapValue(array_shift($path));
@@ -167,6 +214,11 @@ class MySqlGrammar extends Grammar
         $accessor = "'$.\"".implode('"."', $path)."\"'";
 
         return "{$field} = json_set({$field}, {$accessor}, {$value->getValue()})";
+=======
+        [$field, $path] = $this->wrapJsonFieldAndPath($key);
+
+        return "{$field} = json_set({$field}{$path}, {$value->getValue()})";
+>>>>>>> master
     }
 
     /**
@@ -181,8 +233,12 @@ class MySqlGrammar extends Grammar
     public function prepareBindingsForUpdate(array $bindings, array $values)
     {
         $values = collect($values)->reject(function ($value, $column) {
+<<<<<<< HEAD
             return $this->isJsonSelector($column) &&
                 in_array(gettype($value), ['boolean', 'integer', 'double']);
+=======
+            return $this->isJsonSelector($column) && is_bool($value);
+>>>>>>> master
         })->all();
 
         return parent::prepareBindingsForUpdate($bindings, $values);
@@ -258,7 +314,11 @@ class MySqlGrammar extends Grammar
     {
         $joins = ' '.$this->compileJoins($query, $query->joins);
 
+<<<<<<< HEAD
         $alias = strpos(strtolower($table), ' as ') !== false
+=======
+        $alias = stripos($table, ' as ') !== false
+>>>>>>> master
                 ? explode(' as ', $table)[1] : $table;
 
         return trim("delete {$alias} from {$table}{$joins} {$where}");
@@ -272,6 +332,7 @@ class MySqlGrammar extends Grammar
      */
     protected function wrapValue($value)
     {
+<<<<<<< HEAD
         if ($value === '*') {
             return $value;
         }
@@ -284,6 +345,9 @@ class MySqlGrammar extends Grammar
         }
 
         return '`'.str_replace('`', '``', $value).'`';
+=======
+        return $value === '*' ? $value : '`'.str_replace('`', '``', $value).'`';
+>>>>>>> master
     }
 
     /**
@@ -294,6 +358,7 @@ class MySqlGrammar extends Grammar
      */
     protected function wrapJsonSelector($value)
     {
+<<<<<<< HEAD
         $path = explode('->', $value);
 
         $field = $this->wrapValue(array_shift($path));
@@ -313,4 +378,18 @@ class MySqlGrammar extends Grammar
     {
         return Str::contains($value, '->');
     }
+=======
+        $delimiter = Str::contains($value, '->>')
+            ? '->>'
+            : '->';
+
+        $path = explode($delimiter, $value);
+
+        $field = $this->wrapSegments(explode('.', array_shift($path)));
+
+        return sprintf('%s'.$delimiter.'\'$.%s\'', $field, collect($path)->map(function ($part) {
+            return '"'.$part.'"';
+        })->implode('.'));
+    }
+>>>>>>> master
 }

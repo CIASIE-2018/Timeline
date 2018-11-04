@@ -26,7 +26,11 @@ trait ManagesTransactions
             // catch any exception we can rollback this transaction so that none of this
             // gets actually persisted to a database or stored in a permanent fashion.
             try {
+<<<<<<< HEAD
                 return tap($callback($this), function ($result) {
+=======
+                return tap($callback($this), function () {
+>>>>>>> master
                     $this->commit();
                 });
             }
@@ -85,6 +89,10 @@ trait ManagesTransactions
      * Start a new database transaction.
      *
      * @return void
+<<<<<<< HEAD
+=======
+     *
+>>>>>>> master
      * @throws \Exception
      */
     public function beginTransaction()
@@ -129,7 +137,11 @@ trait ManagesTransactions
     /**
      * Handle an exception from a transaction beginning.
      *
+<<<<<<< HEAD
      * @param  \Exception  $e
+=======
+     * @param  \Throwable  $e
+>>>>>>> master
      * @return void
      *
      * @throws \Exception
@@ -166,6 +178,11 @@ trait ManagesTransactions
      *
      * @param  int|null  $toLevel
      * @return void
+<<<<<<< HEAD
+=======
+     *
+     * @throws \Exception
+>>>>>>> master
      */
     public function rollBack($toLevel = null)
     {
@@ -183,7 +200,15 @@ trait ManagesTransactions
         // Next, we will actually perform this rollback within this database and fire the
         // rollback event. We will also set the current transaction level to the given
         // level that was passed into this method so it will be right from here out.
+<<<<<<< HEAD
         $this->performRollBack($toLevel);
+=======
+        try {
+            $this->performRollBack($toLevel);
+        } catch (Exception $e) {
+            $this->handleRollBackException($e);
+        }
+>>>>>>> master
 
         $this->transactions = $toLevel;
 
@@ -208,6 +233,25 @@ trait ManagesTransactions
     }
 
     /**
+<<<<<<< HEAD
+=======
+     * Handle an exception from a rollback.
+     *
+     * @param \Exception  $e
+     *
+     * @throws \Exception
+     */
+    protected function handleRollBackException($e)
+    {
+        if ($this->causedByLostConnection($e)) {
+            $this->transactions = 0;
+        }
+
+        throw $e;
+    }
+
+    /**
+>>>>>>> master
      * Get the number of active transactions.
      *
      * @return int

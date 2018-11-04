@@ -41,7 +41,11 @@ class DatabaseMigrationRepository implements MigrationRepositoryInterface
     }
 
     /**
+<<<<<<< HEAD
      * Get the ran migrations.
+=======
+     * Get the completed migrations.
+>>>>>>> master
      *
      * @return array
      */
@@ -81,10 +85,30 @@ class DatabaseMigrationRepository implements MigrationRepositoryInterface
     }
 
     /**
+<<<<<<< HEAD
      * Log that a migration was run.
      *
      * @param  string  $file
      * @param  int     $batch
+=======
+     * Get the completed migrations with their batch numbers.
+     *
+     * @return array
+     */
+    public function getMigrationBatches()
+    {
+        return $this->table()
+                ->orderBy('batch', 'asc')
+                ->orderBy('migration', 'asc')
+                ->pluck('batch', 'migration')->all();
+    }
+
+    /**
+     * Log that a migration was run.
+     *
+     * @param  string  $file
+     * @param  int  $batch
+>>>>>>> master
      * @return void
      */
     public function log($file, $batch)

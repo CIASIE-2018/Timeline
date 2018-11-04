@@ -7,6 +7,16 @@ use Illuminate\Contracts\Support\MessageProvider;
 interface Validator extends MessageProvider
 {
     /**
+<<<<<<< HEAD
+=======
+     * Run the validator's rules against its data.
+     *
+     * @return array
+     */
+    public function validate();
+
+    /**
+>>>>>>> master
      * Determine if the data fails the validation rules.
      *
      * @return bool
@@ -23,7 +33,11 @@ interface Validator extends MessageProvider
     /**
      * Add conditions to a given field based on a Closure.
      *
+<<<<<<< HEAD
      * @param  string  $attribute
+=======
+     * @param  string|array  $attribute
+>>>>>>> master
      * @param  string|array  $rules
      * @param  callable  $callback
      * @return $this

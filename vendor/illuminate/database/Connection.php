@@ -504,7 +504,11 @@ class Connection implements ConnectionInterface
             }
 
             $this->recordsHaveBeenModified(
+<<<<<<< HEAD
                 $change = ($this->getPdo()->exec($query) === false ? false : true)
+=======
+                $change = $this->getPdo()->exec($query) !== false
+>>>>>>> master
             );
 
             return $change;
@@ -552,7 +556,11 @@ class Connection implements ConnectionInterface
 
         // Now we'll execute this callback and capture the result. Once it has been
         // executed we will restore the value of query logging and give back the
+<<<<<<< HEAD
         // value of hte callback so the original callers can have the results.
+=======
+        // value of the callback so the original callers can have the results.
+>>>>>>> master
         $result = $callback();
 
         $this->loggingQueries = $loggingQueries;
@@ -705,6 +713,10 @@ class Connection implements ConnectionInterface
      * @param  array  $bindings
      * @param  \Closure  $callback
      * @return mixed
+<<<<<<< HEAD
+=======
+     *
+>>>>>>> master
      * @throws \Exception
      */
     protected function handleQueryException($e, $query, $bindings, Closure $callback)
@@ -929,7 +941,11 @@ class Connection implements ConnectionInterface
             return $this->getPdo();
         }
 
+<<<<<<< HEAD
         if ($this->getConfig('sticky') && $this->recordsModified) {
+=======
+        if ($this->recordsModified && $this->getConfig('sticky')) {
+>>>>>>> master
             return $this->getPdo();
         }
 
@@ -958,7 +974,11 @@ class Connection implements ConnectionInterface
     /**
      * Set the PDO connection used for reading.
      *
+<<<<<<< HEAD
      * @param  \PDO||\Closure|null  $pdo
+=======
+     * @param  \PDO|\Closure|null  $pdo
+>>>>>>> master
      * @return $this
      */
     public function setReadPdo($pdo)
@@ -1026,11 +1046,20 @@ class Connection implements ConnectionInterface
      * Set the query grammar used by the connection.
      *
      * @param  \Illuminate\Database\Query\Grammars\Grammar  $grammar
+<<<<<<< HEAD
      * @return void
+=======
+     * @return $this
+>>>>>>> master
      */
     public function setQueryGrammar(Query\Grammars\Grammar $grammar)
     {
         $this->queryGrammar = $grammar;
+<<<<<<< HEAD
+=======
+
+        return $this;
+>>>>>>> master
     }
 
     /**
@@ -1047,11 +1076,20 @@ class Connection implements ConnectionInterface
      * Set the schema grammar used by the connection.
      *
      * @param  \Illuminate\Database\Schema\Grammars\Grammar  $grammar
+<<<<<<< HEAD
      * @return void
+=======
+     * @return $this
+>>>>>>> master
      */
     public function setSchemaGrammar(Schema\Grammars\Grammar $grammar)
     {
         $this->schemaGrammar = $grammar;
+<<<<<<< HEAD
+=======
+
+        return $this;
+>>>>>>> master
     }
 
     /**
@@ -1068,11 +1106,20 @@ class Connection implements ConnectionInterface
      * Set the query post processor used by the connection.
      *
      * @param  \Illuminate\Database\Query\Processors\Processor  $processor
+<<<<<<< HEAD
      * @return void
+=======
+     * @return $this
+>>>>>>> master
      */
     public function setPostProcessor(Processor $processor)
     {
         $this->postProcessor = $processor;
+<<<<<<< HEAD
+=======
+
+        return $this;
+>>>>>>> master
     }
 
     /**
@@ -1089,11 +1136,30 @@ class Connection implements ConnectionInterface
      * Set the event dispatcher instance on the connection.
      *
      * @param  \Illuminate\Contracts\Events\Dispatcher  $events
+<<<<<<< HEAD
      * @return void
+=======
+     * @return $this
+>>>>>>> master
      */
     public function setEventDispatcher(Dispatcher $events)
     {
         $this->events = $events;
+<<<<<<< HEAD
+=======
+
+        return $this;
+    }
+
+    /**
+     * Unset the event dispatcher for this connection.
+     *
+     * @return void
+     */
+    public function unsetEventDispatcher()
+    {
+        $this->events = null;
+>>>>>>> master
     }
 
     /**
@@ -1170,11 +1236,20 @@ class Connection implements ConnectionInterface
      * Set the name of the connected database.
      *
      * @param  string  $database
+<<<<<<< HEAD
      * @return string
+=======
+     * @return $this
+>>>>>>> master
      */
     public function setDatabaseName($database)
     {
         $this->database = $database;
+<<<<<<< HEAD
+=======
+
+        return $this;
+>>>>>>> master
     }
 
     /**
@@ -1191,13 +1266,22 @@ class Connection implements ConnectionInterface
      * Set the table prefix in use by the connection.
      *
      * @param  string  $prefix
+<<<<<<< HEAD
      * @return void
+=======
+     * @return $this
+>>>>>>> master
      */
     public function setTablePrefix($prefix)
     {
         $this->tablePrefix = $prefix;
 
         $this->getQueryGrammar()->setTablePrefix($prefix);
+<<<<<<< HEAD
+=======
+
+        return $this;
+>>>>>>> master
     }
 
     /**

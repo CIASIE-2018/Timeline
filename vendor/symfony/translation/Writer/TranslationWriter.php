@@ -38,9 +38,19 @@ class TranslationWriter implements TranslationWriterInterface
 
     /**
      * Disables dumper backup.
+<<<<<<< HEAD
      */
     public function disableBackup()
     {
+=======
+     *
+     * @deprecated since Symfony 4.1
+     */
+    public function disableBackup()
+    {
+        @trigger_error(sprintf('The "%s()" method is deprecated since Symfony 4.1.', __METHOD__), E_USER_DEPRECATED);
+
+>>>>>>> master
         foreach ($this->dumpers as $dumper) {
             if (method_exists($dumper, 'setBackup')) {
                 $dumper->setBackup(false);
@@ -83,6 +93,7 @@ class TranslationWriter implements TranslationWriterInterface
         // save
         $dumper->dump($catalogue, $options);
     }
+<<<<<<< HEAD
 
     /**
      * Writes translation from the catalogue according to the selected format.
@@ -100,4 +111,6 @@ class TranslationWriter implements TranslationWriterInterface
         @trigger_error(sprintf('The "%s()" method is deprecated since Symfony 3.4 and will be removed in 4.0. Use write() instead.', __METHOD__), E_USER_DEPRECATED);
         $this->write($catalogue, $format, $options);
     }
+=======
+>>>>>>> master
 }

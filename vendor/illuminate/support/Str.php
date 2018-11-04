@@ -2,7 +2,15 @@
 
 namespace Illuminate\Support;
 
+<<<<<<< HEAD
 use Illuminate\Support\Traits\Macroable;
+=======
+use Ramsey\Uuid\Uuid;
+use Ramsey\Uuid\UuidFactory;
+use Illuminate\Support\Traits\Macroable;
+use Ramsey\Uuid\Generator\CombGenerator;
+use Ramsey\Uuid\Codec\TimestampFirstCombCodec;
+>>>>>>> master
 
 class Str
 {
@@ -149,7 +157,11 @@ class Str
      */
     public static function is($pattern, $value)
     {
+<<<<<<< HEAD
         $patterns = is_array($pattern) ? $pattern : (array) $pattern;
+=======
+        $patterns = Arr::wrap($pattern);
+>>>>>>> master
 
         if (empty($patterns)) {
             return false;
@@ -518,6 +530,40 @@ class Str
     }
 
     /**
+<<<<<<< HEAD
+=======
+     * Generate a UUID (version 4).
+     *
+     * @return \Ramsey\Uuid\UuidInterface
+     */
+    public static function uuid()
+    {
+        return Uuid::uuid4();
+    }
+
+    /**
+     * Generate a time-ordered UUID (version 4).
+     *
+     * @return \Ramsey\Uuid\UuidInterface
+     */
+    public static function orderedUuid()
+    {
+        $factory = new UuidFactory;
+
+        $factory->setRandomGenerator(new CombGenerator(
+            $factory->getRandomGenerator(),
+            $factory->getNumberConverter()
+        ));
+
+        $factory->setCodec(new TimestampFirstCombCodec(
+            $factory->getUuidBuilder()
+        ));
+
+        return $factory->uuid4();
+    }
+
+    /**
+>>>>>>> master
      * Returns the replacements for the ascii method.
      *
      * Note: Adapted from Stringy\Stringy.

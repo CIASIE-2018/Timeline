@@ -20,6 +20,16 @@ abstract class Grammar extends BaseGrammar
     protected $transactions = false;
 
     /**
+<<<<<<< HEAD
+=======
+     * The commands to be executed outside of create or alter command.
+     *
+     * @var array
+     */
+    protected $fluentCommands = [];
+
+    /**
+>>>>>>> master
      * Compile a rename column command.
      *
      * @param  \Illuminate\Database\Schema\Blueprint  $blueprint
@@ -244,6 +254,19 @@ abstract class Grammar extends BaseGrammar
     }
 
     /**
+<<<<<<< HEAD
+=======
+     * Get the fluent commands for the grammar.
+     *
+     * @return array
+     */
+    public function getFluentCommands()
+    {
+        return $this->fluentCommands;
+    }
+
+    /**
+>>>>>>> master
      * Check if this Grammar supports schema changes wrapped in a transaction.
      *
      * @return bool

@@ -2,6 +2,10 @@
 
 namespace Illuminate\Database\Eloquent\Concerns;
 
+<<<<<<< HEAD
+=======
+use Illuminate\Support\Arr;
+>>>>>>> master
 use Illuminate\Contracts\Events\Dispatcher;
 
 trait HasEvents
@@ -25,6 +29,7 @@ trait HasEvents
     protected $observables = [];
 
     /**
+<<<<<<< HEAD
      * Register an observer with the Model.
      *
      * @param  object|string  $class
@@ -34,12 +39,40 @@ trait HasEvents
     {
         $instance = new static;
 
+=======
+     * Register observers with the model.
+     *
+     * @param  object|array|string  $classes
+     * @return void
+     */
+    public static function observe($classes)
+    {
+        $instance = new static;
+
+        foreach (Arr::wrap($classes) as $class) {
+            $instance->registerObserver($class);
+        }
+    }
+
+    /**
+     * Register a single observer with the model.
+     *
+     * @param  object|string $class
+     * @return void
+     */
+    protected function registerObserver($class)
+    {
+>>>>>>> master
         $className = is_string($class) ? $class : get_class($class);
 
         // When registering a model observer, we will spin through the possible events
         // and determine if this observer has that method. If it does, we will hook
         // it into the model's event system, making it convenient to watch these.
+<<<<<<< HEAD
         foreach ($instance->getObservableEvents() as $event) {
+=======
+        foreach ($this->getObservableEvents() as $event) {
+>>>>>>> master
             if (method_exists($class, $event)) {
                 static::registerModelEvent($event, $className.'@'.$event);
             }
@@ -55,9 +88,15 @@ trait HasEvents
     {
         return array_merge(
             [
+<<<<<<< HEAD
                 'retrieved', 'creating', 'created', 'updating',
                 'updated', 'deleting', 'deleted', 'saving',
                 'saved', 'restoring', 'restored',
+=======
+                'retrieved', 'creating', 'created', 'updating', 'updated',
+                'saving', 'saved', 'restoring', 'restored',
+                'deleting', 'deleted', 'forceDeleted',
+>>>>>>> master
             ],
             $this->observables
         );
@@ -134,7 +173,11 @@ trait HasEvents
         // First, we will get the proper method to call on the event dispatcher, and then we
         // will attempt to fire a custom, object based event for the given event. If that
         // returns a result we can return that result, or we'll call the string events.
+<<<<<<< HEAD
         $method = $halt ? 'until' : 'fire';
+=======
+        $method = $halt ? 'until' : 'dispatch';
+>>>>>>> master
 
         $result = $this->filterModelEventResults(
             $this->fireCustomModelEvent($event, $method)

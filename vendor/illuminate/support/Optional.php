@@ -3,6 +3,10 @@
 namespace Illuminate\Support;
 
 use ArrayAccess;
+<<<<<<< HEAD
+=======
+use ArrayObject;
+>>>>>>> master
 
 class Optional implements ArrayAccess
 {
@@ -37,11 +41,16 @@ class Optional implements ArrayAccess
     public function __get($key)
     {
         if (is_object($this->value)) {
+<<<<<<< HEAD
             return $this->value->{$key};
+=======
+            return $this->value->{$key} ?? null;
+>>>>>>> master
         }
     }
 
     /**
+<<<<<<< HEAD
      * Dynamically pass a method to the underlying object.
      *
      * @param  string  $method
@@ -57,6 +66,24 @@ class Optional implements ArrayAccess
         if (is_object($this->value)) {
             return $this->value->{$method}(...$parameters);
         }
+=======
+     * Dynamically check a property exists on the underlying object.
+     *
+     * @param  mixed  $name
+     * @return bool
+     */
+    public function __isset($name)
+    {
+        if (is_object($this->value)) {
+            return isset($this->value->{$name});
+        }
+
+        if (is_array($this->value) || $this->value instanceof ArrayObject) {
+            return isset($this->value[$name]);
+        }
+
+        return false;
+>>>>>>> master
     }
 
     /**
@@ -107,4 +134,25 @@ class Optional implements ArrayAccess
             unset($this->value[$key]);
         }
     }
+<<<<<<< HEAD
+=======
+
+    /**
+     * Dynamically pass a method to the underlying object.
+     *
+     * @param  string  $method
+     * @param  array  $parameters
+     * @return mixed
+     */
+    public function __call($method, $parameters)
+    {
+        if (static::hasMacro($method)) {
+            return $this->macroCall($method, $parameters);
+        }
+
+        if (is_object($this->value)) {
+            return $this->value->{$method}(...$parameters);
+        }
+    }
+>>>>>>> master
 }

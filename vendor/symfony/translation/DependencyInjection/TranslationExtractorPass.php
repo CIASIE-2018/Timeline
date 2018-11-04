@@ -24,7 +24,11 @@ class TranslationExtractorPass implements CompilerPassInterface
     private $extractorServiceId;
     private $extractorTag;
 
+<<<<<<< HEAD
     public function __construct($extractorServiceId = 'translation.extractor', $extractorTag = 'translation.extractor')
+=======
+    public function __construct(string $extractorServiceId = 'translation.extractor', string $extractorTag = 'translation.extractor')
+>>>>>>> master
     {
         $this->extractorServiceId = $extractorServiceId;
         $this->extractorTag = $extractorTag;

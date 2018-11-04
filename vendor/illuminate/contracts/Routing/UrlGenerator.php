@@ -54,7 +54,11 @@ interface UrlGenerator
     /**
      * Get the URL to a controller action.
      *
+<<<<<<< HEAD
      * @param  string  $action
+=======
+     * @param  string|array  $action
+>>>>>>> master
      * @param  mixed $parameters
      * @param  bool $absolute
      * @return string

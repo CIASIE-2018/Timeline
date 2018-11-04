@@ -14,5 +14,13 @@ class HomeController extends Controller {
 		return $this->view->render($response, 'home.twig');
 
 	}
+
+
+	public function rules ($request, $response)
+	{
+
+		return $this->view->render($response,'rules.twig');
+	}
+
 }
 

@@ -12,6 +12,16 @@ interface QueueableEntity
     public function getQueueableId();
 
     /**
+<<<<<<< HEAD
+=======
+     * Get the relationships for the entity.
+     *
+     * @return array
+     */
+    public function getQueueableRelations();
+
+    /**
+>>>>>>> master
      * Get the connection of the entity.
      *
      * @return string|null

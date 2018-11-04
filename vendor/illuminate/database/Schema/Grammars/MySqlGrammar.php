@@ -15,7 +15,11 @@ class MySqlGrammar extends Grammar
      */
     protected $modifiers = [
         'Unsigned', 'VirtualAs', 'StoredAs', 'Charset', 'Collate', 'Nullable',
+<<<<<<< HEAD
         'Default', 'Increment', 'Comment', 'After', 'First',
+=======
+        'Default', 'Increment', 'Comment', 'After', 'First', 'Srid',
+>>>>>>> master
     ];
 
     /**
@@ -114,9 +118,15 @@ class MySqlGrammar extends Grammar
         // added to either this create table blueprint or the configuration for this
         // connection that the query is targeting. We'll add it to this SQL query.
         if (isset($blueprint->collation)) {
+<<<<<<< HEAD
             $sql .= ' collate '.$blueprint->collation;
         } elseif (! is_null($collation = $connection->getConfig('collation'))) {
             $sql .= ' collate '.$collation;
+=======
+            $sql .= " collate '{$blueprint->collation}'";
+        } elseif (! is_null($collation = $connection->getConfig('collation'))) {
+            $sql .= " collate '{$collation}'";
+>>>>>>> master
         }
 
         return $sql;
@@ -343,6 +353,25 @@ class MySqlGrammar extends Grammar
     }
 
     /**
+<<<<<<< HEAD
+=======
+     * Compile a rename index command.
+     *
+     * @param  \Illuminate\Database\Schema\Blueprint $blueprint
+     * @param  \Illuminate\Support\Fluent $command
+     * @return string
+     */
+    public function compileRenameIndex(Blueprint $blueprint, Fluent $command)
+    {
+        return sprintf('alter table %s rename index %s to %s',
+            $this->wrapTable($blueprint),
+            $this->wrap($command->from),
+            $this->wrap($command->to)
+        );
+    }
+
+    /**
+>>>>>>> master
      * Compile the SQL needed to drop all tables.
      *
      * @param  array  $tables
@@ -354,6 +383,20 @@ class MySqlGrammar extends Grammar
     }
 
     /**
+<<<<<<< HEAD
+=======
+     * Compile the SQL needed to drop all views.
+     *
+     * @param  array  $views
+     * @return string
+     */
+    public function compileDropAllViews($views)
+    {
+        return 'drop view '.implode(',', $this->wrapArray($views));
+    }
+
+    /**
+>>>>>>> master
      * Compile the SQL needed to retrieve all table names.
      *
      * @return string
@@ -364,6 +407,19 @@ class MySqlGrammar extends Grammar
     }
 
     /**
+<<<<<<< HEAD
+=======
+     * Compile the SQL needed to retrieve all view names.
+     *
+     * @return string
+     */
+    public function compileGetAllViews()
+    {
+        return 'SHOW FULL TABLES WHERE table_type = \'VIEW\'';
+    }
+
+    /**
+>>>>>>> master
      * Compile the command to enable foreign key constraints.
      *
      * @return string
@@ -542,14 +598,22 @@ class MySqlGrammar extends Grammar
     }
 
     /**
+<<<<<<< HEAD
      * Create the column definition for an enum type.
+=======
+     * Create the column definition for an enumeration type.
+>>>>>>> master
      *
      * @param  \Illuminate\Support\Fluent  $column
      * @return string
      */
     protected function typeEnum(Fluent $column)
     {
+<<<<<<< HEAD
         return "enum('".implode("', '", $column->allowed)."')";
+=======
+        return sprintf('enum(%s)', $this->quoteString($column->allowed));
+>>>>>>> master
     }
 
     /**
@@ -862,7 +926,11 @@ class MySqlGrammar extends Grammar
     protected function modifyCollate(Blueprint $blueprint, Fluent $column)
     {
         if (! is_null($column->collation)) {
+<<<<<<< HEAD
             return ' collate '.$column->collation;
+=======
+            return " collate '{$column->collation}'";
+>>>>>>> master
         }
     }
 
@@ -951,6 +1019,23 @@ class MySqlGrammar extends Grammar
     }
 
     /**
+<<<<<<< HEAD
+=======
+     * Get the SQL for a SRID column modifier.
+     *
+     * @param  \Illuminate\Database\Schema\Blueprint  $blueprint
+     * @param  \Illuminate\Support\Fluent  $column
+     * @return string|null
+     */
+    protected function modifySrid(Blueprint $blueprint, Fluent $column)
+    {
+        if (! is_null($column->srid) && is_int($column->srid) && $column->srid > 0) {
+            return ' srid '.$column->srid;
+        }
+    }
+
+    /**
+>>>>>>> master
      * Wrap a single string in keyword identifiers.
      *
      * @param  string  $value

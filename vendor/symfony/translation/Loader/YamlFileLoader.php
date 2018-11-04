@@ -15,6 +15,10 @@ use Symfony\Component\Translation\Exception\InvalidResourceException;
 use Symfony\Component\Translation\Exception\LogicException;
 use Symfony\Component\Yaml\Exception\ParseException;
 use Symfony\Component\Yaml\Parser as YamlParser;
+<<<<<<< HEAD
+=======
+use Symfony\Component\Yaml\Yaml;
+>>>>>>> master
 
 /**
  * YamlFileLoader loads translations from Yaml files.
@@ -38,6 +42,7 @@ class YamlFileLoader extends FileLoader
             $this->yamlParser = new YamlParser();
         }
 
+<<<<<<< HEAD
         $prevErrorHandler = set_error_handler(function ($level, $message, $script, $line) use ($resource, &$prevErrorHandler) {
             $message = E_USER_DEPRECATED === $level ? preg_replace('/ on line \d+/', ' in "'.$resource.'"$0', $message) : $message;
 
@@ -50,6 +55,12 @@ class YamlFileLoader extends FileLoader
             throw new InvalidResourceException(sprintf('Error parsing YAML, invalid file "%s"', $resource), 0, $e);
         } finally {
             restore_error_handler();
+=======
+        try {
+            $messages = $this->yamlParser->parseFile($resource, Yaml::PARSE_CONSTANT);
+        } catch (ParseException $e) {
+            throw new InvalidResourceException(sprintf('Error parsing YAML, invalid file "%s"', $resource), 0, $e);
+>>>>>>> master
         }
 
         return $messages;

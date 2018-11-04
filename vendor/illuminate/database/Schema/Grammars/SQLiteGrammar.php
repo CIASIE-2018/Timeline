@@ -3,7 +3,13 @@
 namespace Illuminate\Database\Schema\Grammars;
 
 use RuntimeException;
+<<<<<<< HEAD
 use Illuminate\Support\Fluent;
+=======
+use Illuminate\Support\Arr;
+use Illuminate\Support\Fluent;
+use Doctrine\DBAL\Schema\Index;
+>>>>>>> master
 use Illuminate\Database\Connection;
 use Illuminate\Database\Schema\Blueprint;
 
@@ -84,7 +90,11 @@ class SQLiteGrammar extends Grammar
 
             // If this foreign key specifies the action to be taken on update we will add
             // that to the statement here. We'll append it to this SQL and then return
+<<<<<<< HEAD
             // the SQL so we can keep adding any other foreign consraints onto this.
+=======
+            // the SQL so we can keep adding any other foreign constraints onto this.
+>>>>>>> master
             if (! is_null($foreign->onUpdate)) {
                 $sql .= " on update {$foreign->onUpdate}";
             }
@@ -177,6 +187,10 @@ class SQLiteGrammar extends Grammar
      *
      * @param  \Illuminate\Database\Schema\Blueprint  $blueprint
      * @param  \Illuminate\Support\Fluent  $command
+<<<<<<< HEAD
+=======
+     *
+>>>>>>> master
      * @throws \RuntimeException
      */
     public function compileSpatialIndex(Blueprint $blueprint, Fluent $command)
@@ -231,6 +245,29 @@ class SQLiteGrammar extends Grammar
     }
 
     /**
+<<<<<<< HEAD
+=======
+     * Compile the SQL needed to drop all views.
+     *
+     * @return string
+     */
+    public function compileDropAllViews()
+    {
+        return "delete from sqlite_master where type in ('view')";
+    }
+
+    /**
+     * Compile the SQL needed to rebuild the database.
+     *
+     * @return string
+     */
+    public function compileRebuild()
+    {
+        return 'vacuum';
+    }
+
+    /**
+>>>>>>> master
      * Compile a drop column command.
      *
      * @param  \Illuminate\Database\Schema\Blueprint  $blueprint
@@ -286,6 +323,10 @@ class SQLiteGrammar extends Grammar
      *
      * @param  \Illuminate\Database\Schema\Blueprint  $blueprint
      * @param  \Illuminate\Support\Fluent  $command
+<<<<<<< HEAD
+=======
+     *
+>>>>>>> master
      * @throws \RuntimeException
      */
     public function compileDropSpatialIndex(Blueprint $blueprint, Fluent $command)
@@ -308,6 +349,42 @@ class SQLiteGrammar extends Grammar
     }
 
     /**
+<<<<<<< HEAD
+=======
+     * Compile a rename index command.
+     *
+     * @param  \Illuminate\Database\Schema\Blueprint $blueprint
+     * @param  \Illuminate\Support\Fluent $command
+     * @param  \Illuminate\Database\Connection $connection
+     * @return array
+     */
+    public function compileRenameIndex(Blueprint $blueprint, Fluent $command, Connection $connection)
+    {
+        $schemaManager = $connection->getDoctrineSchemaManager();
+
+        $indexes = $schemaManager->listTableIndexes($this->getTablePrefix().$blueprint->getTable());
+
+        $index = Arr::get($indexes, $command->from);
+
+        if (! $index) {
+            throw new RuntimeException("Index [{$command->from}] does not exist.");
+        }
+
+        $newIndex = new Index(
+            $command->to, $index->getColumns(), $index->isUnique(),
+            $index->isPrimary(), $index->getFlags(), $index->getOptions()
+        );
+
+        $platform = $schemaManager->getDatabasePlatform();
+
+        return [
+            $platform->getDropIndexSQL($command->from, $this->getTablePrefix().$blueprint->getTable()),
+            $platform->getCreateIndexSQL($newIndex, $this->getTablePrefix().$blueprint->getTable()),
+        ];
+    }
+
+    /**
+>>>>>>> master
      * Compile the command to enable foreign key constraints.
      *
      * @return string
@@ -502,14 +579,26 @@ class SQLiteGrammar extends Grammar
     }
 
     /**
+<<<<<<< HEAD
      * Create the column definition for an enum type.
+=======
+     * Create the column definition for an enumeration type.
+>>>>>>> master
      *
      * @param  \Illuminate\Support\Fluent  $column
      * @return string
      */
     protected function typeEnum(Fluent $column)
     {
+<<<<<<< HEAD
         return 'varchar';
+=======
+        return sprintf(
+            'varchar check ("%s" in (%s))',
+            $column->name,
+            $this->quoteString($column->allowed)
+        );
+>>>>>>> master
     }
 
     /**

@@ -4,10 +4,18 @@ namespace Illuminate\Support\Testing\Fakes;
 
 use Illuminate\Contracts\Mail\Mailer;
 use Illuminate\Contracts\Mail\Mailable;
+<<<<<<< HEAD
 use PHPUnit\Framework\Assert as PHPUnit;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
 class MailFake implements Mailer
+=======
+use Illuminate\Contracts\Mail\MailQueue;
+use PHPUnit\Framework\Assert as PHPUnit;
+use Illuminate\Contracts\Queue\ShouldQueue;
+
+class MailFake implements Mailer, MailQueue
+>>>>>>> master
 {
     /**
      * All of the mailables that have been sent.
@@ -36,9 +44,21 @@ class MailFake implements Mailer
             return $this->assertSentTimes($mailable, $callback);
         }
 
+<<<<<<< HEAD
         PHPUnit::assertTrue(
             $this->sent($mailable, $callback)->count() > 0,
             "The expected [{$mailable}] mailable was not sent."
+=======
+        $message = "The expected [{$mailable}] mailable was not sent.";
+
+        if (count($this->queuedMailables) > 0) {
+            $message .= ' Did you mean to use assertQueued() instead?';
+        }
+
+        PHPUnit::assertTrue(
+            $this->sent($mailable, $callback)->count() > 0,
+            $message
+>>>>>>> master
         );
     }
 
@@ -282,7 +302,11 @@ class MailFake implements Mailer
         }
 
         if ($view instanceof ShouldQueue) {
+<<<<<<< HEAD
             return $this->queue($view, $data, $callback);
+=======
+            return $this->queue($view, $data);
+>>>>>>> master
         }
 
         $this->mailables[] = $view;
@@ -305,6 +329,22 @@ class MailFake implements Mailer
     }
 
     /**
+<<<<<<< HEAD
+=======
+     * Queue a new e-mail message for sending after (n) seconds.
+     *
+     * @param  \DateTimeInterface|\DateInterval|int  $delay
+     * @param  string|array|\Illuminate\Contracts\Mail\Mailable  $view
+     * @param  string  $queue
+     * @return mixed
+     */
+    public function later($delay, $view, $queue = null)
+    {
+        $this->queue($view, $queue);
+    }
+
+    /**
+>>>>>>> master
      * Get the array of failed recipients.
      *
      * @return array

@@ -34,8 +34,14 @@ class MessageBag implements Arrayable, Countable, Jsonable, JsonSerializable, Me
     public function __construct(array $messages = [])
     {
         foreach ($messages as $key => $value) {
+<<<<<<< HEAD
             $this->messages[$key] = $value instanceof Arrayable
                     ? $value->toArray() : (array) $value;
+=======
+            $value = $value instanceof Arrayable ? $value->toArray() : (array) $value;
+
+            $this->messages[$key] = array_unique($value);
+>>>>>>> master
         }
     }
 

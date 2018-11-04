@@ -4,6 +4,10 @@ namespace Illuminate\Database\Connectors;
 
 use PDO;
 use Exception;
+<<<<<<< HEAD
+=======
+use Throwable;
+>>>>>>> master
 use Doctrine\DBAL\Driver\PDOConnection;
 use Illuminate\Database\DetectsLostConnections;
 
@@ -31,10 +35,19 @@ class Connector
      * @param  array   $config
      * @param  array   $options
      * @return \PDO
+<<<<<<< HEAD
      */
     public function createConnection($dsn, array $config, array $options)
     {
         list($username, $password) = [
+=======
+     *
+     * @throws \Exception
+     */
+    public function createConnection($dsn, array $config, array $options)
+    {
+        [$username, $password] = [
+>>>>>>> master
             $config['username'] ?? null, $config['password'] ?? null,
         ];
 
@@ -82,7 +95,11 @@ class Connector
     /**
      * Handle an exception that occurred during connect execution.
      *
+<<<<<<< HEAD
      * @param  \Exception  $e
+=======
+     * @param  \Throwable  $e
+>>>>>>> master
      * @param  string  $dsn
      * @param  string  $username
      * @param  string  $password
@@ -91,7 +108,11 @@ class Connector
      *
      * @throws \Exception
      */
+<<<<<<< HEAD
     protected function tryAgainIfCausedByLostConnection(Exception $e, $dsn, $username, $password, $options)
+=======
+    protected function tryAgainIfCausedByLostConnection(Throwable $e, $dsn, $username, $password, $options)
+>>>>>>> master
     {
         if ($this->causedByLostConnection($e)) {
             return $this->createPdoConnection($dsn, $username, $password, $options);

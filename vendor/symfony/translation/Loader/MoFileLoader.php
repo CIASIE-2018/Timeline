@@ -134,11 +134,16 @@ class MoFileLoader extends FileLoader
      * Reads an unsigned long from stream respecting endianness.
      *
      * @param resource $stream
+<<<<<<< HEAD
      * @param bool     $isBigEndian
      *
      * @return int
      */
     private function readLong($stream, $isBigEndian)
+=======
+     */
+    private function readLong($stream, bool $isBigEndian): int
+>>>>>>> master
     {
         $result = unpack($isBigEndian ? 'N1' : 'V1', fread($stream, 4));
         $result = current($result);

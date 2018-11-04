@@ -51,11 +51,25 @@ abstract class Manager
      *
      * @param  string  $driver
      * @return mixed
+<<<<<<< HEAD
+=======
+     *
+     * @throws \InvalidArgumentException
+>>>>>>> master
      */
     public function driver($driver = null)
     {
         $driver = $driver ?: $this->getDefaultDriver();
 
+<<<<<<< HEAD
+=======
+        if (is_null($driver)) {
+            throw new InvalidArgumentException(sprintf(
+                'Unable to resolve NULL driver for [%s].', static::class
+            ));
+        }
+
+>>>>>>> master
         // If the given driver has not been created before, we will create the instances
         // here and cache it so we can return it next time very quickly. If there is
         // already a driver created by this name, we'll just return that instance.

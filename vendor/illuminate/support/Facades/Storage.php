@@ -5,6 +5,11 @@ namespace Illuminate\Support\Facades;
 use Illuminate\Filesystem\Filesystem;
 
 /**
+<<<<<<< HEAD
+=======
+ * @method static \Illuminate\Contracts\Filesystem\Filesystem disk(string $name = null)
+ *
+>>>>>>> master
  * @see \Illuminate\Filesystem\FilesystemManager
  */
 class Storage extends Facade

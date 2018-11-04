@@ -3,6 +3,10 @@
 namespace Illuminate\Database\Eloquent\Relations;
 
 use Illuminate\Support\Str;
+<<<<<<< HEAD
+=======
+use InvalidArgumentException;
+>>>>>>> master
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -76,6 +80,16 @@ class BelongsToMany extends Relation
     protected $pivotWhereIns = [];
 
     /**
+<<<<<<< HEAD
+=======
+     * The default values for the pivot columns.
+     *
+     * @var array
+     */
+    protected $pivotValues = [];
+
+    /**
+>>>>>>> master
      * Indicates if timestamps are available on the pivot table.
      *
      * @var bool
@@ -267,10 +281,27 @@ class BelongsToMany extends Relation
     }
 
     /**
+<<<<<<< HEAD
      * Specify the custom pivot model to use for the relationship.
      *
      * @param  string  $class
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+=======
+     * Get the class being used for pivot models.
+     *
+     * @return string
+     */
+    public function getPivotClass()
+    {
+        return $this->using ?? Pivot::class;
+    }
+
+    /**
+     * Specify the custom pivot model to use for the relationship.
+     *
+     * @param  string  $class
+     * @return $this
+>>>>>>> master
      */
     public function using($class)
     {
@@ -283,7 +314,11 @@ class BelongsToMany extends Relation
      * Specify the custom pivot accessor to use for the relationship.
      *
      * @param  string  $accessor
+<<<<<<< HEAD
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+=======
+     * @return $this
+>>>>>>> master
      */
     public function as($accessor)
     {
@@ -299,7 +334,11 @@ class BelongsToMany extends Relation
      * @param  string  $operator
      * @param  mixed   $value
      * @param  string  $boolean
+<<<<<<< HEAD
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+=======
+     * @return $this
+>>>>>>> master
      */
     public function wherePivot($column, $operator = null, $value = null, $boolean = 'and')
     {
@@ -315,7 +354,11 @@ class BelongsToMany extends Relation
      * @param  mixed   $values
      * @param  string  $boolean
      * @param  bool    $not
+<<<<<<< HEAD
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+=======
+     * @return $this
+>>>>>>> master
      */
     public function wherePivotIn($column, $values, $boolean = 'and', $not = false)
     {
@@ -330,7 +373,11 @@ class BelongsToMany extends Relation
      * @param  string  $column
      * @param  string  $operator
      * @param  mixed   $value
+<<<<<<< HEAD
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+=======
+     * @return $this
+>>>>>>> master
      */
     public function orWherePivot($column, $operator = null, $value = null)
     {
@@ -338,11 +385,46 @@ class BelongsToMany extends Relation
     }
 
     /**
+<<<<<<< HEAD
+=======
+     * Set a where clause for a pivot table column.
+     *
+     * In addition, new pivot records will receive this value.
+     *
+     * @param  string  $column
+     * @param  mixed  $value
+     * @return $this
+     */
+    public function withPivotValue($column, $value = null)
+    {
+        if (is_array($column)) {
+            foreach ($column as $name => $value) {
+                $this->withPivotValue($name, $value);
+            }
+
+            return $this;
+        }
+
+        if (is_null($value)) {
+            throw new InvalidArgumentException('The provided value may not be null.');
+        }
+
+        $this->pivotValues[] = compact('column', 'value');
+
+        return $this->wherePivot($column, '=', $value);
+    }
+
+    /**
+>>>>>>> master
      * Set an "or where in" clause for a pivot table column.
      *
      * @param  string  $column
      * @param  mixed   $values
+<<<<<<< HEAD
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+=======
+     * @return $this
+>>>>>>> master
      */
     public function orWherePivotIn($column, $values)
     {
@@ -461,7 +543,11 @@ class BelongsToMany extends Relation
         $result = $this->find($id, $columns);
 
         if (is_array($id)) {
+<<<<<<< HEAD
             if (count($result) == count(array_unique($id))) {
+=======
+            if (count($result) === count(array_unique($id))) {
+>>>>>>> master
                 return $result;
             }
         } elseif (! is_null($result)) {
@@ -522,10 +608,17 @@ class BelongsToMany extends Relation
         // First we'll add the proper select columns onto the query so it is run with
         // the proper columns. Then, we will get the results and hydrate out pivot
         // models with the result of those columns as a separate model relation.
+<<<<<<< HEAD
         $columns = $this->query->getQuery()->columns ? [] : $columns;
 
         $builder = $this->query->applyScopes();
 
+=======
+        $builder = $this->query->applyScopes();
+
+        $columns = $builder->getQuery()->columns ? [] : $columns;
+
+>>>>>>> master
         $models = $builder->addSelect(
             $this->shouldSelect($columns)
         )->getModels();
@@ -546,7 +639,11 @@ class BelongsToMany extends Relation
      * Get the select columns for the relation query.
      *
      * @param  array  $columns
+<<<<<<< HEAD
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+=======
+     * @return array
+>>>>>>> master
      */
     protected function shouldSelect(array $columns = ['*'])
     {
@@ -628,6 +725,27 @@ class BelongsToMany extends Relation
     }
 
     /**
+<<<<<<< HEAD
+=======
+     * Execute a callback over each item while chunking.
+     *
+     * @param  callable  $callback
+     * @param  int  $count
+     * @return bool
+     */
+    public function each(callable $callback, $count = 1000)
+    {
+        return $this->chunk($count, function ($results) use ($callback) {
+            foreach ($results as $key => $value) {
+                if ($callback($value, $key) === false) {
+                    return false;
+                }
+            }
+        });
+    }
+
+    /**
+>>>>>>> master
      * Hydrate the pivot table relationship on the models.
      *
      * @param  array  $models
@@ -880,7 +998,11 @@ class BelongsToMany extends Relation
      *
      * @param  mixed  $createdAt
      * @param  mixed  $updatedAt
+<<<<<<< HEAD
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+=======
+     * @return $this
+>>>>>>> master
      */
     public function withTimestamps($createdAt = null, $updatedAt = null)
     {

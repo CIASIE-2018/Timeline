@@ -57,8 +57,15 @@ class StatusCommand extends BaseCommand
 
         $ran = $this->migrator->getRepository()->getRan();
 
+<<<<<<< HEAD
         if (count($migrations = $this->getStatusFor($ran)) > 0) {
             $this->table(['Ran?', 'Migration'], $migrations);
+=======
+        $batches = $this->migrator->getRepository()->getMigrationBatches();
+
+        if (count($migrations = $this->getStatusFor($ran, $batches)) > 0) {
+            $this->table(['Ran?', 'Migration', 'Batch'], $migrations);
+>>>>>>> master
         } else {
             $this->error('No migrations found');
         }
@@ -68,6 +75,7 @@ class StatusCommand extends BaseCommand
      * Get the status for the given ran migrations.
      *
      * @param  array  $ran
+<<<<<<< HEAD
      * @return \Illuminate\Support\Collection
      */
     protected function getStatusFor(array $ran)
@@ -79,6 +87,20 @@ class StatusCommand extends BaseCommand
                         return in_array($migrationName, $ran)
                                 ? ['<info>Y</info>', $migrationName]
                                 : ['<fg=red>N</fg=red>', $migrationName];
+=======
+     * @param  array  $batches
+     * @return \Illuminate\Support\Collection
+     */
+    protected function getStatusFor(array $ran, array $batches)
+    {
+        return Collection::make($this->getAllMigrationFiles())
+                    ->map(function ($migration) use ($ran, $batches) {
+                        $migrationName = $this->migrator->getMigrationName($migration);
+
+                        return in_array($migrationName, $ran)
+                                ? ['<info>Yes</info>', $migrationName, $batches[$migrationName]]
+                                : ['<fg=red>No</fg=red>', $migrationName];
+>>>>>>> master
                     });
     }
 
@@ -100,9 +122,17 @@ class StatusCommand extends BaseCommand
     protected function getOptions()
     {
         return [
+<<<<<<< HEAD
             ['database', null, InputOption::VALUE_OPTIONAL, 'The database connection to use.'],
 
             ['path', null, InputOption::VALUE_OPTIONAL, 'The path of migrations files to use.'],
+=======
+            ['database', null, InputOption::VALUE_OPTIONAL, 'The database connection to use'],
+
+            ['path', null, InputOption::VALUE_OPTIONAL, 'The path to the migrations files to use'],
+
+            ['realpath', null, InputOption::VALUE_NONE, 'Indicate any provided migration file paths are pre-resolved absolute paths'],
+>>>>>>> master
         ];
     }
 }

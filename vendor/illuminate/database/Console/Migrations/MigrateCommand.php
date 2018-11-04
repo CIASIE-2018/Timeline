@@ -14,12 +14,22 @@ class MigrateCommand extends BaseCommand
      *
      * @var string
      */
+<<<<<<< HEAD
     protected $signature = 'migrate {--database= : The database connection to use.}
                 {--force : Force the operation to run when in production.}
                 {--path= : The path of migrations files to be executed.}
                 {--pretend : Dump the SQL queries that would be run.}
                 {--seed : Indicates if the seed task should be re-run.}
                 {--step : Force the migrations to be run so they can be rolled back individually.}';
+=======
+    protected $signature = 'migrate {--database= : The database connection to use}
+                {--force : Force the operation to run when in production}
+                {--path= : The path to the migrations files to be executed}
+                {--realpath : Indicate any provided migration file paths are pre-resolved absolute paths}
+                {--pretend : Dump the SQL queries that would be run}
+                {--seed : Indicates if the seed task should be re-run}
+                {--step : Force the migrations to be run so they can be rolled back individually}';
+>>>>>>> master
 
     /**
      * The console command description.
@@ -64,6 +74,7 @@ class MigrateCommand extends BaseCommand
         // Next, we will check to see if a path option has been defined. If it has
         // we will use the path relative to the root of this installation folder
         // so that migrations may be run for any path within the applications.
+<<<<<<< HEAD
         $this->migrator->run($this->getMigrationPaths(), [
             'pretend' => $this->option('pretend'),
             'step' => $this->option('step'),
@@ -75,6 +86,13 @@ class MigrateCommand extends BaseCommand
         foreach ($this->migrator->getNotes() as $note) {
             $this->output->writeln($note);
         }
+=======
+        $this->migrator->setOutput($this->output)
+                ->run($this->getMigrationPaths(), [
+                    'pretend' => $this->option('pretend'),
+                    'step' => $this->option('step'),
+                ]);
+>>>>>>> master
 
         // Finally, if the "seed" option has been given, we will re-run the database
         // seed task to re-populate the database, which is convenient when adding

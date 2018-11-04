@@ -2,6 +2,10 @@
 
 namespace Illuminate\Support\Testing\Fakes;
 
+<<<<<<< HEAD
+=======
+use Closure;
+>>>>>>> master
 use Illuminate\Support\Arr;
 use PHPUnit\Framework\Assert as PHPUnit;
 use Illuminate\Contracts\Events\Dispatcher;
@@ -134,7 +138,11 @@ class EventFake implements Dispatcher
      */
     public function listen($events, $listener)
     {
+<<<<<<< HEAD
         //
+=======
+        $this->dispatcher->listen($events, $listener);
+>>>>>>> master
     }
 
     /**
@@ -145,7 +153,11 @@ class EventFake implements Dispatcher
      */
     public function hasListeners($eventName)
     {
+<<<<<<< HEAD
         //
+=======
+        return $this->dispatcher->hasListeners($eventName);
+>>>>>>> master
     }
 
     /**
@@ -168,7 +180,11 @@ class EventFake implements Dispatcher
      */
     public function subscribe($subscriber)
     {
+<<<<<<< HEAD
         //
+=======
+        $this->dispatcher->subscribe($subscriber);
+>>>>>>> master
     }
 
     /**
@@ -207,7 +223,11 @@ class EventFake implements Dispatcher
     {
         $name = is_object($event) ? get_class($event) : (string) $event;
 
+<<<<<<< HEAD
         if ($this->shouldFakeEvent($name)) {
+=======
+        if ($this->shouldFakeEvent($name, $payload)) {
+>>>>>>> master
             $this->events[$name][] = func_get_args();
         } else {
             $this->dispatcher->dispatch($event, $payload, $halt);
@@ -218,11 +238,30 @@ class EventFake implements Dispatcher
      * Determine if an event should be faked or actually dispatched.
      *
      * @param  string  $eventName
+<<<<<<< HEAD
      * @return bool
      */
     protected function shouldFakeEvent($eventName)
     {
         return empty($this->eventsToFake) || in_array($eventName, $this->eventsToFake);
+=======
+     * @param  mixed  $payload
+     * @return bool
+     */
+    protected function shouldFakeEvent($eventName, $payload)
+    {
+        if (empty($this->eventsToFake)) {
+            return true;
+        }
+
+        return collect($this->eventsToFake)
+            ->filter(function ($event) use ($eventName, $payload) {
+                return $event instanceof Closure
+                            ? $event($eventName, $payload)
+                            : $event === $eventName;
+            })
+            ->isNotEmpty();
+>>>>>>> master
     }
 
     /**

@@ -5,7 +5,11 @@ namespace Illuminate\Contracts\Routing;
 interface ResponseFactory
 {
     /**
+<<<<<<< HEAD
      * Return a new response from the application.
+=======
+     * Create a new response instance.
+>>>>>>> master
      *
      * @param  string  $content
      * @param  int  $status
@@ -15,7 +19,20 @@ interface ResponseFactory
     public function make($content = '', $status = 200, array $headers = []);
 
     /**
+<<<<<<< HEAD
      * Return a new view response from the application.
+=======
+     * Create a new "no content" response.
+     *
+     * @param  int  $status
+     * @param  array  $headers
+     * @return \Illuminate\Http\Response
+     */
+    public function noContent($status = 204, array $headers = []);
+
+    /**
+     * Create a new response for a given view.
+>>>>>>> master
      *
      * @param  string  $view
      * @param  array  $data
@@ -26,7 +43,11 @@ interface ResponseFactory
     public function view($view, $data = [], $status = 200, array $headers = []);
 
     /**
+<<<<<<< HEAD
      * Return a new JSON response from the application.
+=======
+     * Create a new JSON response instance.
+>>>>>>> master
      *
      * @param  string|array  $data
      * @param  int  $status
@@ -37,7 +58,11 @@ interface ResponseFactory
     public function json($data = [], $status = 200, array $headers = [], $options = 0);
 
     /**
+<<<<<<< HEAD
      * Return a new JSONP response from the application.
+=======
+     * Create a new JSONP response instance.
+>>>>>>> master
      *
      * @param  string  $callback
      * @param  string|array  $data
@@ -49,7 +74,11 @@ interface ResponseFactory
     public function jsonp($callback, $data = [], $status = 200, array $headers = [], $options = 0);
 
     /**
+<<<<<<< HEAD
      * Return a new streamed response from the application.
+=======
+     * Create a new streamed response instance.
+>>>>>>> master
      *
      * @param  \Closure  $callback
      * @param  int  $status
@@ -59,10 +88,28 @@ interface ResponseFactory
     public function stream($callback, $status = 200, array $headers = []);
 
     /**
+<<<<<<< HEAD
      * Create a new file download response.
      *
      * @param  \SplFileInfo|string  $file
      * @param  string  $name
+=======
+     * Create a new streamed response instance as a file download.
+     *
+     * @param  \Closure  $callback
+     * @param  string|null  $name
+     * @param  array  $headers
+     * @param  string|null  $disposition
+     * @return \Symfony\Component\HttpFoundation\StreamedResponse
+     */
+    public function streamDownload($callback, $name = null, array $headers = [], $disposition = 'attachment');
+
+    /**
+     * Create a new file download response.
+     *
+     * @param  \SplFileInfo|string  $file
+     * @param  string|null  $name
+>>>>>>> master
      * @param  array  $headers
      * @param  string|null  $disposition
      * @return \Symfony\Component\HttpFoundation\BinaryFileResponse

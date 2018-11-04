@@ -34,7 +34,11 @@ class XliffLintCommand extends Command
     private $directoryIteratorProvider;
     private $isReadableProvider;
 
+<<<<<<< HEAD
     public function __construct($name = null, $directoryIteratorProvider = null, $isReadableProvider = null)
+=======
+    public function __construct(string $name = null, callable $directoryIteratorProvider = null, callable $isReadableProvider = null)
+>>>>>>> master
     {
         parent::__construct($name);
 
@@ -102,6 +106,11 @@ EOF
 
     private function validate($content, $file = null)
     {
+<<<<<<< HEAD
+=======
+        $errors = array();
+
+>>>>>>> master
         // Avoid: Warning DOMDocument::loadXML(): Empty string supplied as input
         if ('' === trim($content)) {
             return array('file' => $file, 'valid' => true);
@@ -111,6 +120,7 @@ EOF
 
         $document = new \DOMDocument();
         $document->loadXML($content);
+<<<<<<< HEAD
         if ($document->schemaValidate(__DIR__.'/../Resources/schemas/xliff-core-1.2-strict.xsd')) {
             return array('file' => $file, 'valid' => true);
         }
@@ -122,11 +132,39 @@ EOF
                 'message' => trim($error->message),
             );
         }, libxml_get_errors());
+=======
+
+        if (null !== $targetLanguage = $this->getTargetLanguageFromFile($document)) {
+            $expectedFileExtension = sprintf('%s.xlf', str_replace('-', '_', $targetLanguage));
+            $realFileExtension = explode('.', basename($file), 2)[1] ?? '';
+
+            if ($expectedFileExtension !== $realFileExtension) {
+                $errors[] = array(
+                    'line' => -1,
+                    'column' => -1,
+                    'message' => sprintf('There is a mismatch between the file extension ("%s") and the "%s" value used in the "target-language" attribute of the file.', $realFileExtension, $targetLanguage),
+                );
+            }
+        }
+
+        $document->schemaValidate(__DIR__.'/../Resources/schemas/xliff-core-1.2-strict.xsd');
+        foreach (libxml_get_errors() as $xmlError) {
+            $errors[] = array(
+                'line' => $xmlError->line,
+                'column' => $xmlError->column,
+                'message' => trim($xmlError->message),
+            );
+        }
+>>>>>>> master
 
         libxml_clear_errors();
         libxml_use_internal_errors(false);
 
+<<<<<<< HEAD
         return array('file' => $file, 'valid' => false, 'messages' => $errorMessages);
+=======
+        return array('file' => $file, 'valid' => 0 === \count($errors), 'messages' => $errors);
+>>>>>>> master
     }
 
     private function display(SymfonyStyle $io, array $files)
@@ -243,4 +281,18 @@ EOF
 
         return $default($fileOrDirectory);
     }
+<<<<<<< HEAD
+=======
+
+    private function getTargetLanguageFromFile(\DOMDocument $xliffContents): ?string
+    {
+        foreach ($xliffContents->getElementsByTagName('file')[0]->attributes ?? array() as $attribute) {
+            if ('target-language' === $attribute->nodeName) {
+                return $attribute->nodeValue;
+            }
+        }
+
+        return null;
+    }
+>>>>>>> master
 }

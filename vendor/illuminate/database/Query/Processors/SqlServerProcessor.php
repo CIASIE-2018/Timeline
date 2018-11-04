@@ -37,6 +37,10 @@ class SqlServerProcessor extends Processor
      *
      * @param  \Illuminate\Database\Connection  $connection
      * @return int
+<<<<<<< HEAD
+=======
+     *
+>>>>>>> master
      * @throws \Exception
      */
     protected function processInsertGetIdForOdbc(Connection $connection)

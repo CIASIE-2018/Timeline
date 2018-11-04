@@ -42,7 +42,12 @@ trait HasTimestamps
             $this->setUpdatedAt($time);
         }
 
+<<<<<<< HEAD
         if (! $this->exists && ! $this->isDirty(static::CREATED_AT)) {
+=======
+        if (! $this->exists && ! is_null(static::CREATED_AT) &&
+            ! $this->isDirty(static::CREATED_AT)) {
+>>>>>>> master
             $this->setCreatedAt($time);
         }
     }

@@ -2,6 +2,7 @@
 
 namespace Illuminate\Support;
 
+<<<<<<< HEAD
 use JsonSerializable;
 use Carbon\Carbon as BaseCarbon;
 use Illuminate\Support\Traits\Macroable;
@@ -45,4 +46,10 @@ class Carbon extends BaseCarbon implements JsonSerializable
     {
         static::$serializer = $callback;
     }
+=======
+use Carbon\Carbon as BaseCarbon;
+
+class Carbon extends BaseCarbon
+{
+>>>>>>> master
 }

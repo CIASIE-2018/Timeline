@@ -122,8 +122,15 @@ class BoundMethod
     /**
      * Get the proper reflection instance for the given callback.
      *
+<<<<<<< HEAD
      * @param  callable|string  $callback
      * @return \ReflectionFunctionAbstract
+=======
+     * @param  callable|string $callback
+     * @return \ReflectionFunctionAbstract
+     *
+     * @throws \ReflectionException
+>>>>>>> master
      */
     protected static function getCallReflector($callback)
     {
@@ -152,6 +159,13 @@ class BoundMethod
             $dependencies[] = $parameters[$parameter->name];
 
             unset($parameters[$parameter->name]);
+<<<<<<< HEAD
+=======
+        } elseif ($parameter->getClass() && array_key_exists($parameter->getClass()->name, $parameters)) {
+            $dependencies[] = $parameters[$parameter->getClass()->name];
+
+            unset($parameters[$parameter->getClass()->name]);
+>>>>>>> master
         } elseif ($parameter->getClass()) {
             $dependencies[] = $container->make($parameter->getClass()->name);
         } elseif ($parameter->isDefaultValueAvailable()) {

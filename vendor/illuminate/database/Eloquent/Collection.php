@@ -4,7 +4,13 @@ namespace Illuminate\Database\Eloquent;
 
 use LogicException;
 use Illuminate\Support\Arr;
+<<<<<<< HEAD
 use Illuminate\Contracts\Support\Arrayable;
+=======
+use Illuminate\Support\Str;
+use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Database\Eloquent\Relations\Pivot;
+>>>>>>> master
 use Illuminate\Contracts\Queue\QueueableCollection;
 use Illuminate\Support\Collection as BaseCollection;
 
@@ -43,7 +49,11 @@ class Collection extends BaseCollection implements QueueableCollection
     /**
      * Load a set of relationships onto the collection.
      *
+<<<<<<< HEAD
      * @param  mixed  $relations
+=======
+     * @param  array|string  $relations
+>>>>>>> master
      * @return $this
      */
     public function load($relations)
@@ -62,6 +72,103 @@ class Collection extends BaseCollection implements QueueableCollection
     }
 
     /**
+<<<<<<< HEAD
+=======
+     * Load a set of relationships onto the collection if they are not already eager loaded.
+     *
+     * @param  array|string  $relations
+     * @return $this
+     */
+    public function loadMissing($relations)
+    {
+        if (is_string($relations)) {
+            $relations = func_get_args();
+        }
+
+        foreach ($relations as $key => $value) {
+            if (is_numeric($key)) {
+                $key = $value;
+            }
+
+            $segments = explode('.', explode(':', $key)[0]);
+
+            if (Str::contains($key, ':')) {
+                $segments[count($segments) - 1] .= ':'.explode(':', $key)[1];
+            }
+
+            $path = array_combine($segments, $segments);
+
+            if (is_callable($value)) {
+                $path[end($segments)] = $value;
+            }
+
+            $this->loadMissingRelation($this, $path);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Load a relationship path if it is not already eager loaded.
+     *
+     * @param  \Illuminate\Database\Eloquent\Collection  $models
+     * @param  array  $path
+     * @return void
+     */
+    protected function loadMissingRelation(Collection $models, array $path)
+    {
+        $relation = array_splice($path, 0, 1);
+
+        $name = explode(':', key($relation))[0];
+
+        if (is_string(reset($relation))) {
+            $relation = reset($relation);
+        }
+
+        $models->filter(function ($model) use ($name) {
+            return ! is_null($model) && ! $model->relationLoaded($name);
+        })->load($relation);
+
+        if (empty($path)) {
+            return;
+        }
+
+        $models = $models->pluck($name);
+
+        if ($models->first() instanceof BaseCollection) {
+            $models = $models->collapse();
+        }
+
+        $this->loadMissingRelation(new static($models), $path);
+    }
+
+    /**
+     * Load a set of relationships onto the mixed relationship collection.
+     *
+     * @param  string  $relation
+     * @param  array  $relations
+     * @return $this
+     */
+    public function loadMorph($relation, $relations)
+    {
+        $this->pluck($relation)
+            ->filter()
+            ->groupBy(function ($model) {
+                return get_class($model);
+            })
+            ->filter(function ($models, $className) use ($relations) {
+                return Arr::has($relations, $className);
+            })
+            ->each(function ($models, $className) use ($relations) {
+                $className::with($relations[$className])
+                    ->eagerLoadRelations($models->all());
+            });
+
+        return $this;
+    }
+
+    /**
+>>>>>>> master
      * Add an item to the collection.
      *
      * @param  mixed  $item
@@ -265,9 +372,13 @@ class Collection extends BaseCollection implements QueueableCollection
      */
     public function makeHidden($attributes)
     {
+<<<<<<< HEAD
         return $this->each(function ($model) use ($attributes) {
             $model->addHidden($attributes);
         });
+=======
+        return $this->each->addHidden($attributes);
+>>>>>>> master
     }
 
     /**
@@ -278,9 +389,13 @@ class Collection extends BaseCollection implements QueueableCollection
      */
     public function makeVisible($attributes)
     {
+<<<<<<< HEAD
         return $this->each(function ($model) use ($attributes) {
             $model->makeVisible($attributes);
         });
+=======
+        return $this->each->makeVisible($attributes);
+>>>>>>> master
     }
 
     /**
@@ -386,6 +501,10 @@ class Collection extends BaseCollection implements QueueableCollection
      * Get the type of the entities being queued.
      *
      * @return string|null
+<<<<<<< HEAD
+=======
+     *
+>>>>>>> master
      * @throws \LogicException
      */
     public function getQueueableClass()
@@ -412,13 +531,37 @@ class Collection extends BaseCollection implements QueueableCollection
      */
     public function getQueueableIds()
     {
+<<<<<<< HEAD
         return $this->modelKeys();
+=======
+        if ($this->isEmpty()) {
+            return [];
+        }
+
+        return $this->first() instanceof Pivot
+                    ? $this->map->getQueueableId()->all()
+                    : $this->modelKeys();
+    }
+
+    /**
+     * Get the relationships of the entities being queued.
+     *
+     * @return array
+     */
+    public function getQueueableRelations()
+    {
+        return $this->isNotEmpty() ? $this->first()->getQueueableRelations() : [];
+>>>>>>> master
     }
 
     /**
      * Get the connection of the entities being queued.
      *
      * @return string|null
+<<<<<<< HEAD
+=======
+     *
+>>>>>>> master
      * @throws \LogicException
      */
     public function getQueueableConnection()

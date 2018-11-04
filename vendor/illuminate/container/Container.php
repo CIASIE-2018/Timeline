@@ -3,10 +3,18 @@
 namespace Illuminate\Container;
 
 use Closure;
+<<<<<<< HEAD
+=======
+use Exception;
+>>>>>>> master
 use ArrayAccess;
 use LogicException;
 use ReflectionClass;
 use ReflectionParameter;
+<<<<<<< HEAD
+=======
+use Illuminate\Support\Arr;
+>>>>>>> master
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Contracts\Container\Container as ContainerContract;
 
@@ -134,12 +142,26 @@ class Container implements ArrayAccess, ContainerContract
     /**
      * Define a contextual binding.
      *
+<<<<<<< HEAD
      * @param  string  $concrete
+=======
+     * @param  array|string  $concrete
+>>>>>>> master
      * @return \Illuminate\Contracts\Container\ContextualBindingBuilder
      */
     public function when($concrete)
     {
+<<<<<<< HEAD
         return new ContextualBindingBuilder($this, $this->getAlias($concrete));
+=======
+        $aliases = [];
+
+        foreach (Arr::wrap($concrete) as $c) {
+            $aliases[] = $this->getAlias($c);
+        }
+
+        return new ContextualBindingBuilder($this, $aliases);
+>>>>>>> master
     }
 
     /**
@@ -271,13 +293,36 @@ class Container implements ArrayAccess, ContainerContract
     /**
      * Bind a callback to resolve with Container::call.
      *
+<<<<<<< HEAD
      * @param  string  $method
+=======
+     * @param  array|string  $method
+>>>>>>> master
      * @param  \Closure  $callback
      * @return void
      */
     public function bindMethod($method, $callback)
     {
+<<<<<<< HEAD
         $this->methodBindings[$method] = $callback;
+=======
+        $this->methodBindings[$this->parseBindMethod($method)] = $callback;
+    }
+
+    /**
+     * Get the method to be bound in class@method format.
+     *
+     * @param  array|string $method
+     * @return string
+     */
+    protected function parseBindMethod($method)
+    {
+        if (is_array($method)) {
+            return $method[0].'@'.$method[1];
+        }
+
+        return $method;
+>>>>>>> master
     }
 
     /**
@@ -591,11 +636,23 @@ class Container implements ArrayAccess, ContainerContract
      */
     public function get($id)
     {
+<<<<<<< HEAD
         if ($this->has($id)) {
             return $this->resolve($id);
         }
 
         throw new EntryNotFoundException;
+=======
+        try {
+            return $this->resolve($id);
+        } catch (Exception $e) {
+            if ($this->has($id)) {
+                throw $e;
+            }
+
+            throw new EntryNotFoundException;
+        }
+>>>>>>> master
     }
 
     /**
@@ -1166,7 +1223,11 @@ class Container implements ArrayAccess, ContainerContract
      * Set the shared instance of the container.
      *
      * @param  \Illuminate\Contracts\Container\Container|null  $container
+<<<<<<< HEAD
      * @return static
+=======
+     * @return \Illuminate\Contracts\Container\Container|static
+>>>>>>> master
      */
     public static function setInstance(ContainerContract $container = null)
     {

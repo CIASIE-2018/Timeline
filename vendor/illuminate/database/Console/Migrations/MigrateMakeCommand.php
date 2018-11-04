@@ -13,10 +13,18 @@ class MigrateMakeCommand extends BaseCommand
      *
      * @var string
      */
+<<<<<<< HEAD
     protected $signature = 'make:migration {name : The name of the migration.}
         {--create= : The table to be created.}
         {--table= : The table to migrate.}
         {--path= : The location where the migration file should be created.}';
+=======
+    protected $signature = 'make:migration {name : The name of the migration}
+        {--create= : The table to be created}
+        {--table= : The table to migrate}
+        {--path= : The location where the migration file should be created}
+        {--realpath : Indicate any provided migration file paths are pre-resolved absolute paths}';
+>>>>>>> master
 
     /**
      * The console command description.
@@ -83,11 +91,15 @@ class MigrateMakeCommand extends BaseCommand
         // "create" in the name. This will allow us to provide a convenient way
         // of creating migrations that create new tables for the application.
         if (! $table) {
+<<<<<<< HEAD
             if (preg_match('/^create_(\w+)_table$/', $name, $matches)) {
                 $table = $matches[1];
 
                 $create = true;
             }
+=======
+            [$table, $create] = TableGuesser::guess($name);
+>>>>>>> master
         }
 
         // Now we are ready to write the migration out to disk. Once we've written
@@ -123,9 +135,28 @@ class MigrateMakeCommand extends BaseCommand
     protected function getMigrationPath()
     {
         if (! is_null($targetPath = $this->input->getOption('path'))) {
+<<<<<<< HEAD
             return $this->laravel->basePath().'/'.$targetPath;
+=======
+            return ! $this->usingRealPath()
+                            ? $this->laravel->basePath().'/'.$targetPath
+                            : $targetPath;
+>>>>>>> master
         }
 
         return parent::getMigrationPath();
     }
+<<<<<<< HEAD
+=======
+
+    /**
+     * Determine if the given path(s) are pre-resolved "real" paths.
+     *
+     * @return bool
+     */
+    protected function usingRealPath()
+    {
+        return $this->input->hasOption('realpath') && $this->option('realpath');
+    }
+>>>>>>> master
 }

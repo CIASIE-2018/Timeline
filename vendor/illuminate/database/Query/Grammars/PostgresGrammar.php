@@ -15,12 +15,43 @@ class PostgresGrammar extends Grammar
      */
     protected $operators = [
         '=', '<', '>', '<=', '>=', '<>', '!=',
+<<<<<<< HEAD
         'like', 'not like', 'between', 'ilike',
         '~', '&', '|', '#', '<<', '>>', '<<=', '>>=',
         '&&', '@>', '<@', '?', '?|', '?&', '||', '-', '+', '#-',
     ];
 
     /**
+=======
+        'like', 'not like', 'between', 'ilike', 'not ilike',
+        '~', '&', '|', '#', '<<', '>>', '<<=', '>>=',
+        '&&', '@>', '<@', '?', '?|', '?&', '||', '-', '-', '#-',
+        'is distinct from', 'is not distinct from',
+    ];
+
+    /**
+     * {@inheritdoc}
+     *
+     * @param  \Illuminate\Database\Query\Builder  $query
+     * @param  array  $where
+     * @return string
+     */
+    protected function whereBasic(Builder $query, $where)
+    {
+        if (Str::contains(strtolower($where['operator']), 'like')) {
+            return sprintf(
+                '%s::text %s %s',
+                $this->wrap($where['column']),
+                $where['operator'],
+                $this->parameter($where['value'])
+            );
+        }
+
+        return parent::whereBasic($query, $where);
+    }
+
+    /**
+>>>>>>> master
      * Compile a "where date" clause.
      *
      * @param  \Illuminate\Database\Query\Builder  $query
@@ -64,6 +95,38 @@ class PostgresGrammar extends Grammar
     }
 
     /**
+<<<<<<< HEAD
+=======
+     * Compile a "JSON contains" statement into SQL.
+     *
+     * @param  string  $column
+     * @param  string  $value
+     * @return string
+     */
+    protected function compileJsonContains($column, $value)
+    {
+        $column = str_replace('->>', '->', $this->wrap($column));
+
+        return '('.$column.')::jsonb @> '.$value;
+    }
+
+    /**
+     * Compile a "JSON length" statement into SQL.
+     *
+     * @param  string  $column
+     * @param  string  $operator
+     * @param  string  $value
+     * @return string
+     */
+    protected function compileJsonLength($column, $operator, $value)
+    {
+        $column = str_replace('->>', '->', $this->wrap($column));
+
+        return 'json_array_length(('.$column.')::json) '.$operator.' '.$value;
+    }
+
+    /**
+>>>>>>> master
      * Compile the lock into SQL.
      *
      * @param  \Illuminate\Database\Query\Builder  $query
@@ -143,11 +206,39 @@ class PostgresGrammar extends Grammar
         // columns and convert it to a parameter value. Then we will concatenate a
         // list of the columns that can be added into this update query clauses.
         return collect($values)->map(function ($value, $key) {
+<<<<<<< HEAD
+=======
+            if ($this->isJsonSelector($key)) {
+                return $this->compileJsonUpdateColumn($key, $value);
+            }
+
+>>>>>>> master
             return $this->wrap($key).' = '.$this->parameter($value);
         })->implode(', ');
     }
 
     /**
+<<<<<<< HEAD
+=======
+     * Prepares a JSON column being updated using the JSONB_SET function.
+     *
+     * @param  string  $key
+     * @param  mixed  $value
+     * @return string
+     */
+    protected function compileJsonUpdateColumn($key, $value)
+    {
+        $parts = explode('->', $key);
+
+        $field = $this->wrap(array_shift($parts));
+
+        $path = '\'{"'.implode('","', $parts).'"}\'';
+
+        return "{$field} = jsonb_set({$field}::jsonb, {$path}, {$this->parameter($value)})";
+    }
+
+    /**
+>>>>>>> master
      * Compile the "from" clause for an update with a join.
      *
      * @param  \Illuminate\Database\Query\Builder  $query
@@ -230,6 +321,15 @@ class PostgresGrammar extends Grammar
      */
     public function prepareBindingsForUpdate(array $bindings, array $values)
     {
+<<<<<<< HEAD
+=======
+        $values = collect($values)->map(function ($value, $column) {
+            return $this->isJsonSelector($column) && ! $this->isExpression($value)
+                ? json_encode($value)
+                : $value;
+        })->all();
+
+>>>>>>> master
         // Update statements with "joins" in Postgres use an interesting syntax. We need to
         // take all of the bindings and put them on the end of this array since they are
         // added to the end of the "where" clause statements as typical where clauses.
@@ -260,7 +360,10 @@ class PostgresGrammar extends Grammar
      *
      * @param  \Illuminate\Database\Query\Builder  $query
      * @param  string  $table
+<<<<<<< HEAD
      * @param  array  $where
+=======
+>>>>>>> master
      * @return string
      */
     protected function compileDeleteWithJoins($query, $table)
@@ -286,6 +389,7 @@ class PostgresGrammar extends Grammar
     }
 
     /**
+<<<<<<< HEAD
      * Wrap a single string in keyword identifiers.
      *
      * @param  string  $value
@@ -308,6 +412,8 @@ class PostgresGrammar extends Grammar
     }
 
     /**
+=======
+>>>>>>> master
      * Wrap the given JSON selector.
      *
      * @param  string  $value
@@ -317,7 +423,11 @@ class PostgresGrammar extends Grammar
     {
         $path = explode('->', $value);
 
+<<<<<<< HEAD
         $field = $this->wrapValue(array_shift($path));
+=======
+        $field = $this->wrapSegments(explode('.', array_shift($path)));
+>>>>>>> master
 
         $wrappedPath = $this->wrapJsonPathAttributes($path);
 

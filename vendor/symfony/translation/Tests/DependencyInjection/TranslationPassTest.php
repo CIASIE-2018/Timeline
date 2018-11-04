@@ -54,6 +54,7 @@ class TranslationPassTest extends TestCase
         $expected = array('translation.xliff_loader' => new ServiceClosureArgument(new Reference('translation.xliff_loader')));
         $this->assertEquals($expected, $container->getDefinition((string) $translator->getArgument(0))->getArgument(0));
     }
+<<<<<<< HEAD
 
     /**
      * @group legacy
@@ -100,4 +101,6 @@ class TranslationPassTest extends TestCase
         $expected = array('translation.xliff_loader' => new ServiceClosureArgument(new Reference('translation.xliff_loader')));
         $this->assertEquals($expected, $container->getDefinition((string) $translator->getArgument(0))->getArgument(0));
     }
+=======
+>>>>>>> master
 }

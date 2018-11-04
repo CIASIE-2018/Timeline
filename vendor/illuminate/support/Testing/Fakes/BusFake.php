@@ -129,4 +129,40 @@ class BusFake implements Dispatcher
     {
         //
     }
+<<<<<<< HEAD
+=======
+
+    /**
+     * Determine if the given command has a handler.
+     *
+     * @param  mixed  $command
+     * @return bool
+     */
+    public function hasCommandHandler($command)
+    {
+        return false;
+    }
+
+    /**
+     * Retrieve the handler for a command.
+     *
+     * @param  mixed  $command
+     * @return mixed
+     */
+    public function getCommandHandler($command)
+    {
+        return false;
+    }
+
+    /**
+     * Map a command to a handler.
+     *
+     * @param  array  $map
+     * @return $this
+     */
+    public function map(array $map)
+    {
+        return $this;
+    }
+>>>>>>> master
 }

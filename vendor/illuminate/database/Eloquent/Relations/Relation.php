@@ -9,13 +9,21 @@ use Illuminate\Support\Traits\Macroable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Query\Expression;
 use Illuminate\Database\Eloquent\Collection;
+<<<<<<< HEAD
+=======
+use Illuminate\Support\Traits\ForwardsCalls;
+>>>>>>> master
 
 /**
  * @mixin \Illuminate\Database\Eloquent\Builder
  */
 abstract class Relation
 {
+<<<<<<< HEAD
     use Macroable {
+=======
+    use ForwardsCalls, Macroable {
+>>>>>>> master
         __call as macroCall;
     }
 
@@ -161,9 +169,19 @@ abstract class Relation
      */
     public function touch()
     {
+<<<<<<< HEAD
         $column = $this->getRelated()->getUpdatedAtColumn();
 
         $this->rawUpdate([$column => $this->getRelated()->freshTimestampString()]);
+=======
+        $model = $this->getRelated();
+
+        if (! $model::isIgnoringTouch()) {
+            $this->rawUpdate([
+                $model->getUpdatedAtColumn() => $model->freshTimestampString(),
+            ]);
+        }
+>>>>>>> master
     }
 
     /**
@@ -219,7 +237,11 @@ abstract class Relation
     {
         return collect($models)->map(function ($value) use ($key) {
             return $key ? $value->getAttribute($key) : $value->getKey();
+<<<<<<< HEAD
         })->values()->unique()->sort()->all();
+=======
+        })->values()->unique(null, true)->sort()->all();
+>>>>>>> master
     }
 
     /**
@@ -346,9 +368,13 @@ abstract class Relation
      */
     public static function getMorphedModel($alias)
     {
+<<<<<<< HEAD
         return array_key_exists($alias, self::$morphMap)
                         ? self::$morphMap[$alias]
                         : null;
+=======
+        return self::$morphMap[$alias] ?? null;
+>>>>>>> master
     }
 
     /**
@@ -364,7 +390,11 @@ abstract class Relation
             return $this->macroCall($method, $parameters);
         }
 
+<<<<<<< HEAD
         $result = $this->query->{$method}(...$parameters);
+=======
+        $result = $this->forwardCallTo($this->query, $method, $parameters);
+>>>>>>> master
 
         if ($result === $this->query) {
             return $this;

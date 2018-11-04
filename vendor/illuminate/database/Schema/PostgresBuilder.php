@@ -12,7 +12,11 @@ class PostgresBuilder extends Builder
      */
     public function hasTable($table)
     {
+<<<<<<< HEAD
         list($schema, $table) = $this->parseSchemaAndTable($table);
+=======
+        [$schema, $table] = $this->parseSchemaAndTable($table);
+>>>>>>> master
 
         $table = $this->connection->getTablePrefix().$table;
 
@@ -52,6 +56,33 @@ class PostgresBuilder extends Builder
     }
 
     /**
+<<<<<<< HEAD
+=======
+     * Drop all views from the database.
+     *
+     * @return void
+     */
+    public function dropAllViews()
+    {
+        $views = [];
+
+        foreach ($this->getAllViews() as $row) {
+            $row = (array) $row;
+
+            $views[] = reset($row);
+        }
+
+        if (empty($views)) {
+            return;
+        }
+
+        $this->connection->statement(
+            $this->grammar->compileDropAllViews($views)
+        );
+    }
+
+    /**
+>>>>>>> master
      * Get all of the table names for the database.
      *
      * @return array
@@ -64,6 +95,21 @@ class PostgresBuilder extends Builder
     }
 
     /**
+<<<<<<< HEAD
+=======
+     * Get all of the view names for the database.
+     *
+     * @return array
+     */
+    protected function getAllViews()
+    {
+        return $this->connection->select(
+            $this->grammar->compileGetAllViews($this->connection->getConfig('schema'))
+        );
+    }
+
+    /**
+>>>>>>> master
      * Get the column listing for a given table.
      *
      * @param  string  $table
@@ -71,7 +117,11 @@ class PostgresBuilder extends Builder
      */
     public function getColumnListing($table)
     {
+<<<<<<< HEAD
         list($schema, $table) = $this->parseSchemaAndTable($table);
+=======
+        [$schema, $table] = $this->parseSchemaAndTable($table);
+>>>>>>> master
 
         $table = $this->connection->getTablePrefix().$table;
 

@@ -68,6 +68,7 @@ abstract class MorphOneOrMany extends HasOneOrMany
     }
 
     /**
+<<<<<<< HEAD
      * Attach a model instance to the parent model.
      *
      * @param  \Illuminate\Database\Eloquent\Model  $model
@@ -81,6 +82,8 @@ abstract class MorphOneOrMany extends HasOneOrMany
     }
 
     /**
+=======
+>>>>>>> master
      * Set the foreign ID and type for creating a related model.
      *
      * @param  \Illuminate\Database\Eloquent\Model  $model

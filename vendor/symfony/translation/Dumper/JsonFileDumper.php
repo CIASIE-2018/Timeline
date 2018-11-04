@@ -28,7 +28,11 @@ class JsonFileDumper extends FileDumper
         if (isset($options['json_encoding'])) {
             $flags = $options['json_encoding'];
         } else {
+<<<<<<< HEAD
             $flags = \defined('JSON_PRETTY_PRINT') ? JSON_PRETTY_PRINT : 0;
+=======
+            $flags = JSON_PRETTY_PRINT;
+>>>>>>> master
         }
 
         return json_encode($messages->all($domain), $flags);

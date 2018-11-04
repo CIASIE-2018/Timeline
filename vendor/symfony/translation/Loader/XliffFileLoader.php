@@ -75,7 +75,11 @@ class XliffFileLoader implements LoaderInterface
      * @param MessageCatalogue $catalogue Catalogue where we'll collect messages and metadata
      * @param string           $domain    The domain
      */
+<<<<<<< HEAD
     private function extractXliff1(\DOMDocument $dom, MessageCatalogue $catalogue, $domain)
+=======
+    private function extractXliff1(\DOMDocument $dom, MessageCatalogue $catalogue, string $domain)
+>>>>>>> master
     {
         $xml = simplexml_import_dom($dom);
         $encoding = strtoupper($dom->encoding);
@@ -115,12 +119,16 @@ class XliffFileLoader implements LoaderInterface
         }
     }
 
+<<<<<<< HEAD
     /**
      * @param \DOMDocument     $dom
      * @param MessageCatalogue $catalogue
      * @param string           $domain
      */
     private function extractXliff2(\DOMDocument $dom, MessageCatalogue $catalogue, $domain)
+=======
+    private function extractXliff2(\DOMDocument $dom, MessageCatalogue $catalogue, string $domain)
+>>>>>>> master
     {
         $xml = simplexml_import_dom($dom);
         $encoding = strtoupper($dom->encoding);
@@ -164,6 +172,7 @@ class XliffFileLoader implements LoaderInterface
 
     /**
      * Convert a UTF8 string to the specified encoding.
+<<<<<<< HEAD
      *
      * @param string $content  String to decode
      * @param string $encoding Target encoding
@@ -171,6 +180,10 @@ class XliffFileLoader implements LoaderInterface
      * @return string
      */
     private function utf8ToCharset($content, $encoding = null)
+=======
+     */
+    private function utf8ToCharset(string $content, string $encoding = null): string
+>>>>>>> master
     {
         if ('UTF-8' !== $encoding && !empty($encoding)) {
             return mb_convert_encoding($content, $encoding, 'UTF-8');
@@ -182,6 +195,7 @@ class XliffFileLoader implements LoaderInterface
     /**
      * Validates and parses the given file into a DOMDocument.
      *
+<<<<<<< HEAD
      * @param string       $file
      * @param \DOMDocument $dom
      * @param string       $schema source of the schema
@@ -189,6 +203,11 @@ class XliffFileLoader implements LoaderInterface
      * @throws InvalidResourceException
      */
     private function validateSchema($file, \DOMDocument $dom, $schema)
+=======
+     * @throws InvalidResourceException
+     */
+    private function validateSchema(string $file, \DOMDocument $dom, string $schema)
+>>>>>>> master
     {
         $internalErrors = libxml_use_internal_errors(true);
 
@@ -225,6 +244,7 @@ class XliffFileLoader implements LoaderInterface
 
     /**
      * Internally changes the URI of a dependent xsd to be loaded locally.
+<<<<<<< HEAD
      *
      * @param string $schemaSource Current content of schema file
      * @param string $xmlUri       External URI of XML to convert to local
@@ -232,6 +252,10 @@ class XliffFileLoader implements LoaderInterface
      * @return string
      */
     private function fixXmlLocation($schemaSource, $xmlUri)
+=======
+     */
+    private function fixXmlLocation(string $schemaSource, string $xmlUri): string
+>>>>>>> master
     {
         $newPath = str_replace('\\', '/', __DIR__).'/schema/dic/xliff-core/xml.xsd';
         $parts = explode('/', $newPath);
@@ -255,12 +279,17 @@ class XliffFileLoader implements LoaderInterface
 
     /**
      * Returns the XML errors of the internal XML parser.
+<<<<<<< HEAD
      *
      * @param bool $internalErrors
      *
      * @return array An array of errors
      */
     private function getXmlErrors($internalErrors)
+=======
+     */
+    private function getXmlErrors(bool $internalErrors): array
+>>>>>>> master
     {
         $errors = array();
         foreach (libxml_get_errors() as $error) {
@@ -284,6 +313,7 @@ class XliffFileLoader implements LoaderInterface
      * Gets xliff file version based on the root "version" attribute.
      * Defaults to 1.2 for backwards compatibility.
      *
+<<<<<<< HEAD
      * @param \DOMDocument $dom
      *
      * @throws InvalidArgumentException
@@ -291,6 +321,11 @@ class XliffFileLoader implements LoaderInterface
      * @return string
      */
     private function getVersionNumber(\DOMDocument $dom)
+=======
+     * @throws InvalidArgumentException
+     */
+    private function getVersionNumber(\DOMDocument $dom): string
+>>>>>>> master
     {
         /** @var \DOMNode $xliff */
         foreach ($dom->getElementsByTagName('xliff') as $xliff) {
@@ -313,6 +348,7 @@ class XliffFileLoader implements LoaderInterface
         return '1.2';
     }
 
+<<<<<<< HEAD
     /**
      * @param \SimpleXMLElement|null $noteElement
      * @param string|null            $encoding
@@ -320,6 +356,9 @@ class XliffFileLoader implements LoaderInterface
      * @return array
      */
     private function parseNotesMetadata(\SimpleXMLElement $noteElement = null, $encoding = null)
+=======
+    private function parseNotesMetadata(\SimpleXMLElement $noteElement = null, string $encoding = null): array
+>>>>>>> master
     {
         $notes = array();
 

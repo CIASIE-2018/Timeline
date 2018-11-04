@@ -17,7 +17,10 @@ use Symfony\Component\Translation\MessageCatalogue;
 
 /**
  * FileDumper is an implementation of DumperInterface that dump a message catalogue to file(s).
+<<<<<<< HEAD
  * Performs backup of already existing files.
+=======
+>>>>>>> master
  *
  * Options:
  * - path (mandatory): the directory where the files should be saved
@@ -34,6 +37,7 @@ abstract class FileDumper implements DumperInterface
     protected $relativePathTemplate = '%domain%.%locale%.%extension%';
 
     /**
+<<<<<<< HEAD
      * Make file backup before the dump.
      *
      * @var bool
@@ -41,6 +45,8 @@ abstract class FileDumper implements DumperInterface
     private $backup = true;
 
     /**
+=======
+>>>>>>> master
      * Sets the template for the relative paths to files.
      *
      * @param string $relativePathTemplate A template for the relative paths to files
@@ -54,10 +60,23 @@ abstract class FileDumper implements DumperInterface
      * Sets backup flag.
      *
      * @param bool
+<<<<<<< HEAD
      */
     public function setBackup($backup)
     {
         $this->backup = $backup;
+=======
+     *
+     * @deprecated since Symfony 4.1
+     */
+    public function setBackup($backup)
+    {
+        @trigger_error(sprintf('The "%s()" method is deprecated since Symfony 4.1.', __METHOD__), E_USER_DEPRECATED);
+
+        if (false !== $backup) {
+            throw new \LogicException('The backup feature is no longer supported.');
+        }
+>>>>>>> master
     }
 
     /**
@@ -71,6 +90,7 @@ abstract class FileDumper implements DumperInterface
 
         // save a file for each domain
         foreach ($messages->getDomains() as $domain) {
+<<<<<<< HEAD
             // backup
             $fullpath = $options['path'].'/'.$this->getRelativePath($domain, $messages->getLocale());
             if (file_exists($fullpath)) {
@@ -79,6 +99,10 @@ abstract class FileDumper implements DumperInterface
                     copy($fullpath, $fullpath.'~');
                 }
             } else {
+=======
+            $fullpath = $options['path'].'/'.$this->getRelativePath($domain, $messages->getLocale());
+            if (!file_exists($fullpath)) {
+>>>>>>> master
                 $directory = \dirname($fullpath);
                 if (!file_exists($directory) && !@mkdir($directory, 0777, true)) {
                     throw new RuntimeException(sprintf('Unable to create directory "%s".', $directory));
@@ -109,6 +133,7 @@ abstract class FileDumper implements DumperInterface
 
     /**
      * Gets the relative file path using the template.
+<<<<<<< HEAD
      *
      * @param string $domain The domain
      * @param string $locale The locale
@@ -116,6 +141,10 @@ abstract class FileDumper implements DumperInterface
      * @return string The relative file path
      */
     private function getRelativePath($domain, $locale)
+=======
+     */
+    private function getRelativePath(string $domain, string $locale): string
+>>>>>>> master
     {
         return strtr($this->relativePathTemplate, array(
             '%domain%' => $domain,

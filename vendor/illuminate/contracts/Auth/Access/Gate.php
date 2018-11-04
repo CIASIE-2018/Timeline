@@ -94,6 +94,18 @@ interface Gate
     public function authorize($ability, $arguments = []);
 
     /**
+<<<<<<< HEAD
+=======
+     * Get the raw result from the authorization callback.
+     *
+     * @param  string  $ability
+     * @param  array|mixed  $arguments
+     * @return mixed
+     */
+    public function raw($ability, $arguments = []);
+
+    /**
+>>>>>>> master
      * Get a policy instance for a given class.
      *
      * @param  object|string  $class
