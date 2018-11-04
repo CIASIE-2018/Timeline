@@ -13,8 +13,12 @@ Class CardController extends Controller{
     private $img;
     private $revealed = false;
 
+    $user = "";
+    $password = "";
+    $database = "";
+    
     public function CardController($id){
-      $bdd = mysqli_connect('localhost', 'login', 'password', 'name');
+      $bdd = mysqli_connect('localhost', $user, $password, $database);
       $query = mysqli_prepare($bdd, 'SELECT * FROM Carte WHERE id = ?');
       msqli_stmt_bind_param($query, "i", $id);
       mysqli_stmt_execute($query);

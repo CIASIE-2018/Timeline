@@ -13,9 +13,13 @@ class GameController extends Controller {
     private $players;
     private $turn;
     private $timeline = [];
+    
+    $user = "";
+    $password = "";
+    $database = "";
 
     public function GameController($id, $theme, $players){
-        $bdd = mysqli_connect('localhost', 'login', 'password', 'name');
+        $bdd = mysqli_connect('localhost', $user, $password, $database);
         $query = mysqli_prepare($bdd, 'SELECT * FROM Carte WHERE theme ='.$theme);
         mysqli_stmt_execute($query);
         mysqli_bind_result($query, $data[idCard], $data[date], $data[event], $data[theme], $data[img]);
